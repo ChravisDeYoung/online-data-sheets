@@ -1,15 +1,54 @@
+# top-most EditorConfig file
 root = true
 
 [*]
+# General settings for all files
 charset = utf-8
 end_of_line = lf
 insert_final_newline = true
-indent_style = space
-indent_size = 4
 trim_trailing_whitespace = true
 
+[*.php]
+# PHP-specific settings
+indent_style = space
+indent_size = 4
+tab_width = 4
+
+[*.blade.php]
+# Blade template-specific settings (often align with HTML/PHP)
+indent_style = space
+indent_size = 4
+tab_width = 4
+
+[*.js]
+# JavaScript-specific settings
+indent_style = space
+indent_size = 2
+tab_width = 2
+
+[*.json]
+# JSON-specific settings
+indent_style = space
+indent_size = 2
+tab_width = 2
+
+[*.css]
+# CSS-specific settings
+indent_style = space
+indent_size = 2
+tab_width = 2
+
+[*.scss]
+# SCSS-specific settings
+indent_style = space
+indent_size = 2
+tab_width = 2
+
 [*.md]
-trim_trailing_whitespace = false
+# Markdown-specific settings (often prefer spaces for lists)
+indent_style = space
+indent_size = 2
+tab_width = 2
 
 [*.{yml,yaml}]
 indent_size = 2
