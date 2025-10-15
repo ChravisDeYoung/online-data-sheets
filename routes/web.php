@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('sessions.create');
+})->middleware('auth');
 
 Route::get('companies', [CompanyController::class, 'index']);
 
@@ -30,7 +30,7 @@ Route::get('users/create', [UserController::class, 'create']);
 Route::post('users', [UserController::class, 'store']);
 Route::get('users/{user}', [UserController::class, 'show']);
 
-Route::get('login', [SessionController::class, 'create']);
+Route::get('login', [SessionController::class, 'create'])->name('login');
 Route::post('login', [SessionController::class, 'store']);
 Route::post('logout', [SessionController::class, 'destroy']);
 

@@ -1,4 +1,4 @@
-<label class="block mb-2 uppercase font-bold text-xs text-gray-700"
+<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
        for="{{ $name }}"
 >
     {{ ucwords($name) }}
