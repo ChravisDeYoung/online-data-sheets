@@ -1,7 +1,6 @@
 <x-layout>
-    <section class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new user</h2>
-
+    <x-form.wrapper>
+        <x-slot name="title">Add a new user</x-slot>
         <form action="/users" method="POST">
             @csrf
 
@@ -27,7 +26,7 @@
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="password-confirmation" type="password" autocomplete="new-password" required/>
+                    <x-form.input name="password_confirmation" type="password" autocomplete="new-password" required/>
                 </div>
             </div>
 
@@ -37,6 +36,6 @@
                 <x-form.button class="ml-2 sm:ml-3">Add user</x-form.button>
             </div>
         </form>
-    </section>
+    </x-form.wrapper>
 </x-layout>
 

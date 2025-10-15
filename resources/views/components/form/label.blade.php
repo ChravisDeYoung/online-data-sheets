@@ -1,5 +1,5 @@
 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
        for="{{ $name }}"
 >
-    {{ ucwords($name) }}
+    {{ ucwords(str_replace('_', ' ', $name)) }}
 </label>

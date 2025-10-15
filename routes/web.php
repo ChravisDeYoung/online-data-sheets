@@ -26,10 +26,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('companies', [CompanyController::class, 'index']);
 
-    Route::get('users', [UserController::class, 'index']);
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/create', [UserController::class, 'create']);
     Route::post('users', [UserController::class, 'store']);
     Route::get('users/{user}', [UserController::class, 'edit']);
+    Route::patch('users/{user}', [UserController::class, 'update']);
 
     Route::post('logout', [SessionController::class, 'destroy']);
 

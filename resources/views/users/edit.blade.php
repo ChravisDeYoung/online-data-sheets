@@ -1,10 +1,13 @@
 <x-layout>
-    <section class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update
-            user: {{ $user->first_name }} {{ $user->last_name }}</h2>
+    <x-form.wrapper>
+        <x-slot name="title">
+            Update user: <span
+                class=" text-blue-600 dark:text-blue-600">{{ $user->first_name }} {{ $user->last_name }}</span>
+        </x-slot>
 
-        <form action="/users" method="POST">
+        <form action="/users/{{ $user->id }}" method="POST">
             @csrf
+            @method('PATCH')
 
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                 <div class="w-full">
@@ -26,20 +29,20 @@
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="password" type="password" autocomplete="new-password" required/>
+                    <x-form.input name="password" type="password" autocomplete="new-password"/>
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="password-confirmation" type="password" autocomplete="new-password" required/>
+                    <x-form.input name="password_confirmation" type="password" autocomplete="new-password"/>
                 </div>
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">
                 <x-form.button href="/users" variant="secondary">Cancel
                 </x-form.button>
-                <x-form.button class="ml-2 sm:ml-3">Add user</x-form.button>
+                <x-form.button class="ml-2 sm:ml-3">Update user</x-form.button>
             </div>
         </form>
-    </section>
+    </x-form.wrapper>
 </x-layout>
 
