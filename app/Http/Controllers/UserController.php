@@ -32,8 +32,8 @@ class UserController extends Controller
         return redirect('/users')->with('success', 'New account has been created.');
     }
 
-    public function show(User $user): View
+    public function edit(User $user): View
     {
-        return view('users.show', ['user' => $user]);
+        return view('users.edit', ['user' => $user]);
     }
 }

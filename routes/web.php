@@ -19,24 +19,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('sessions.create');
-})->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('sessions.create');
+    });
 
-Route::get('companies', [CompanyController::class, 'index']);
+    Route::get('companies', [CompanyController::class, 'index']);
 
-Route::get('users', [UserController::class, 'index']);
-Route::get('users/create', [UserController::class, 'create']);
-Route::post('users', [UserController::class, 'store']);
-Route::get('users/{user}', [UserController::class, 'show']);
+    Route::get('users', [UserController::class, 'index']);
+    Route::get('users/create', [UserController::class, 'create']);
+    Route::post('users', [UserController::class, 'store']);
+    Route::get('users/{user}', [UserController::class, 'edit']);
+
+    Route::post('logout', [SessionController::class, 'destroy']);
+
+    Route::resource('fields', FieldController::class);
+
+    Route::get('pages/{page:slug}', [PageController::class, 'show']);
+});
 
 Route::get('login', [SessionController::class, 'create'])->name('login');
 Route::post('login', [SessionController::class, 'store']);
-Route::post('logout', [SessionController::class, 'destroy']);
 
-Route::resource('fields', FieldController::class);
-
-Route::get('pages/{page:slug}', [PageController::class, 'show']);
 //Route::post('/register', function () {
 //    $validated = $this->validate(request(), [
 //        'name' => 'required|string|max:255',
