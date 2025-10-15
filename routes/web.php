@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\FieldController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SessionController;
 use App\Models\User;
@@ -34,6 +35,8 @@ Route::post('login', [SessionController::class, 'store']);
 Route::post('logout', [SessionController::class, 'destroy']);
 
 Route::resource('fields', FieldController::class);
+
+Route::get('pages/{page:slug}', [PageController::class, 'show']);
 //Route::post('/register', function () {
 //    $validated = $this->validate(request(), [
 //        'name' => 'required|string|max:255',

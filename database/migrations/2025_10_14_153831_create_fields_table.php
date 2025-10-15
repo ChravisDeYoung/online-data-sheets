@@ -18,9 +18,9 @@ class CreateFieldsTable extends Migration
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('page_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->tinyInteger('type')->default(Field::TYPE_TEXT);
-            $table->string('subreport');
             $table->string('subsection');
             $table->integer('subsection_sort_order');
             $table->integer('sort_order');

@@ -12,7 +12,7 @@
                     Name
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Subreport
+                    Page
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Subsection
@@ -30,7 +30,7 @@
                         {{ $field->name }}
                     </th>
                     <td class="px-6 py-4">
-                        {{ $field->subreport }}
+                        {{ $field->page->name }}
                     </td>
                     <td class="px-6 py-4">
                         {{ $field->subsection }}
