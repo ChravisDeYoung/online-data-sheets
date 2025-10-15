@@ -17,6 +17,8 @@ class Field extends Model
     public const TYPE_CHECKBOX = 4;
     public const TYPE_TEXTAREA = 5;
 
+    protected $with = ['page'];
+
     public static function getTypes(): array
     {
         return [
@@ -32,5 +34,16 @@ class Field extends Model
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        $query->when($search, function () use ($query, $search) {
+            return $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('subsection', 'like', '%' . $search . '%')
+                ->orWhereHas('page', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                });
+        });
     }
 }

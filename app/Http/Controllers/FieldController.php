@@ -10,7 +10,9 @@ class FieldController extends Controller
     public function index(): View
     {
         return view('fields.index', ['fields' => Field::orderBy('subsection_sort_order')
-            ->orderBy('sort_order')->get()]);
+            ->orderBy('sort_order')
+            ->search(request('search'))
+            ->paginate(10)]);
     }
 
     /**
