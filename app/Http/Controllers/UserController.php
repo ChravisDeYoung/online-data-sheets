@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     public function index(): View
     {
-        return view('users.index', ['users' => User::orderBy('name')->get()]);
+        $search = request('search');
+        return view('users.index', ['users' => User::search($search)->paginate(10)]);
     }
 
     public function create(): View

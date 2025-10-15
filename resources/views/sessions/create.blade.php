@@ -37,7 +37,7 @@
                             password?</a>
                     </div>
 
-                    <x-form.button>Sign in</x-form.button>
+                    <x-form.button class="w-full">Sign in</x-form.button>
 
 
                     {{--                        TODO: email admin to create account for you--}}

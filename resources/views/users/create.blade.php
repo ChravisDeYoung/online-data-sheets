@@ -1,19 +1,30 @@
 <x-layout>
-    <section class="px-6 py-8">
-        <main class="max-w-lg mx-auto mt-10">
-            <h1 class="text-center font-bold text-xl">Create new user</h1>
+    <section class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new user</h2>
 
-            <form method="POST" action="/users" class="mt-10">
-                @csrf
+        <form action="/users" method="POST">
+            @csrf
 
-                <x-form.input name="name" type="text" required/>
-                <x-form.input name="email" type="email" autocomplete="username" required/>
-                <x-form.input name="password" type="password" autocomplete="new-password" required/>
-                <x-form.input name="password-confirmation" type="password" autocomplete="new-password" required/>
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div class="sm:col-span-2">
+                    <x-form.input name="name" type="text" required/>
+                </div>
 
-                <x-form.button>Create new user</x-form.button>
-            </form>
-        </main>
+                <div class="sm:col-span-2">
+                    <x-form.input name="email" type="email" autocomplete="email" required/>
+                </div>
+
+                <div class="w-full">
+                    <x-form.input name="password" type="password" autocomplete="new-password" required/>
+                </div>
+
+                <div class="w-full">
+                    <x-form.input name="password-confirmation" type="password" autocomplete="new-password" required/>
+                </div>
+            </div>
+            
+            <x-form.button class="inline-flex items-center mt-4 sm:mt-6">Add user</x-form.button>
+        </form>
     </section>
 </x-layout>
 
