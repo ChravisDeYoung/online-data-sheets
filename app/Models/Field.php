@@ -10,12 +10,21 @@ class Field extends Model
 {
     use HasFactory;
 
-    public const TYPE_TEXT = 0;
-    public const TYPE_NUMBER = 1;
-    public const TYPE_DATE = 2;
-    public const TYPE_SELECT = 3;
-    public const TYPE_CHECKBOX = 4;
-    public const TYPE_TEXTAREA = 5;
+    public const TYPE_TEXT = 1;
+    public const TYPE_NUMBER = 2;
+    public const TYPE_DATE = 3;
+    public const TYPE_SELECT = 4;
+    public const TYPE_CHECKBOX = 5;
+    public const TYPE_TEXTAREA = 6;
+
+    protected $fillable = [
+        'page_id',
+        'name',
+        'type',
+        'subsection',
+        'subsection_sort_order',
+        'sort_order',
+    ];
 
     protected $with = ['page'];
 

@@ -46,7 +46,7 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('users.index', $user)->with('success', 'User updated');
+        return redirect()->route('users.index')->with('success', 'User updated');
     }
 
     private function validateUser(?User $user = null): array

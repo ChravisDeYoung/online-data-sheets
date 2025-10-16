@@ -33,8 +33,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('users/{user}', [UserController::class, 'update']);
 
     Route::post('logout', [SessionController::class, 'destroy']);
-
-    Route::resource('fields', FieldController::class);
+    
+    Route::get('fields', [FieldController::class, 'index'])->name('fields.index');
+    Route::get('fields/create', [FieldController::class, 'create']);
+    Route::post('fields', [FieldController::class, 'store']);
+    Route::get('fields/{field}', [FieldController::class, 'edit']);
+    Route::patch('fields/{field}', [FieldController::class, 'update']);
 
     Route::get('pages/{page:slug}', [PageController::class, 'show']);
 });
