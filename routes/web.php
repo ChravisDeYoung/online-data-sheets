@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('users/{user}', [UserController::class, 'update']);
 
     Route::post('logout', [SessionController::class, 'destroy']);
-    
+
     Route::get('fields', [FieldController::class, 'index'])->name('fields.index');
     Route::get('fields/create', [FieldController::class, 'create']);
     Route::post('fields', [FieldController::class, 'store']);
