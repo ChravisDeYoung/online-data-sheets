@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DashboardTile;
 use App\Models\Field;
 use App\Models\Page;
 use App\Models\User;
@@ -62,6 +63,13 @@ class DatabaseSeeder extends Seeder
             'subsection' => 'Data',
             'subsection_sort_order' => 2,
             'sort_order' => 3,
+        ]);
+
+        DashboardTile::factory()->create([
+            'page_id' => $page->id,
+            'sort_order' => 1,
+            'title' => 'Sample Data Sheet',
+            'parent_dashboard_tile_id' => null,
         ]);
     }
 }

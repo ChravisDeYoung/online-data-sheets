@@ -1,82 +1,65 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Models\Page;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): View
     {
-        //
+        return view('pages.index', [
+            'pages' => Page::search(request('search'))->orderBy('name')->paginate(10)
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('pages.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StorePageRequest $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StorePageRequest $request)
+    public function store(): RedirectResponse
     {
-        //
-    }
+        $attributes = $this->validatePage();
 
+        Page::create($attributes);
+
+        return redirect('/pages')->with('success', 'New page has been created.');
+    }
 
     public function show(Page $page): View
     {
-        return view('pages.show', compact('page'));
+        return view('pages.show', ['page' => $page]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\Page $page
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Page $page)
+    public function edit(Page $page): View
     {
-        //
+        return view('pages.edit', ['page' => $page]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdatePageRequest $request
-     * @param \App\Models\Page $page
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatePageRequest $request, Page $page)
+
+    public function update(Page $page): RedirectResponse
     {
-        //
+        $validated = $this->validatePage($page);
+
+        $page->update($validated);
+
+        return redirect()->route('pages.index')->with('success', 'Page updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Page $page
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Page $page)
+    private function validatePage(?Page $page = null): array
     {
-        //
+        $page ??= new Page();
+
+        return request()->validate([
+            'name' => 'required|max:255',
+            'slug' => 'required|max:255|unique:pages,slug,' . $page->id,
+        ]);
     }
 }

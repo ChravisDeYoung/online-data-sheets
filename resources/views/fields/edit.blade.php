@@ -6,7 +6,7 @@
     <x-form.wrapper>
         <x-slot name="title">
             Update field: <span
-                class=" text-blue-600 dark:text-bl  ue-600">{{ $field->name }}</span>
+                class=" text-blue-600 dark:text-blue-600">{{ $field->name }}</span>
         </x-slot>
 
         <form action="/fields/{{ $field->id }}" method="POST">

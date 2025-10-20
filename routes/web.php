@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DashboardTileController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SessionController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,16 +20,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('sessions.create');
-    });
+    Route::get('/', [DashboardTileController::class, 'index']);
 
     Route::get('companies', [CompanyController::class, 'index']);
 
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/create', [UserController::class, 'create']);
     Route::post('users', [UserController::class, 'store']);
-    Route::get('users/{user}', [UserController::class, 'edit']);
+    Route::get('users/{user}/edit', [UserController::class, 'edit']);
     Route::patch('users/{user}', [UserController::class, 'update']);
 
     Route::post('logout', [SessionController::class, 'destroy']);
@@ -37,10 +35,15 @@ Route::middleware('auth')->group(function () {
     Route::get('fields', [FieldController::class, 'index'])->name('fields.index');
     Route::get('fields/create', [FieldController::class, 'create']);
     Route::post('fields', [FieldController::class, 'store']);
-    Route::get('fields/{field}', [FieldController::class, 'edit']);
+    Route::get('fields/{field}/edit', [FieldController::class, 'edit']);
     Route::patch('fields/{field}', [FieldController::class, 'update']);
 
-    Route::get('pages/{page:slug}', [PageController::class, 'show']);
+    Route::get('pages', [PageController::class, 'index'])->name('pages.index');
+    Route::get('pages/create', [PageController::class, 'create'])->name('pages.create');
+    Route::post('pages', [PageController::class, 'store'])->name('pages.store');
+    Route::get('pages/{page:slug}', [PageController::class, 'show'])->name('pages.show');
+    Route::get('pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
+    Route::patch('pages/{page}', [PageController::class, 'update'])->name('pages.update');
 });
 
 Route::get('login', [SessionController::class, 'create'])->name('login');
