@@ -15,7 +15,10 @@ class PageController extends Controller
     public function index(): View
     {
         return view('pages.index', [
-            'pages' => Page::search(request('search'))->orderBy('name')->paginate(10)
+            'pages' => Page::search(request('search'))
+                ->with('fields')
+                ->orderBy('name')
+                ->paginate(10)
         ]);
     }
 

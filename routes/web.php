@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardTileController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\PageController;
@@ -20,7 +21,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [DashboardTileController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard.index');
+    Route::get('/dashboard/{dashboardTileId}', [DashboardController::class, 'show'])
+        ->name('dashboard.show');
+
+    Route::get('/dashboard-tiles', [DashboardTileController::class, 'index'])
+        ->name('dashboard-tiles.index');
+    Route::get('/dashboard-tiles/create', [DashboardTileController::class, 'create'])
+        ->name('dashboard-tiles.create');
+    Route::post('/dashboard-tiles', [DashboardTileController::class, 'store'])
+        ->name('dashboard-tiles.store');
+    Route::get('/dashboard-tiles/{dashboardTile}/edit', [DashboardTileController::class, 'edit'])
+        ->name('dashboard-tiles.edit');
+    Route::patch('/dashboard-tiles/{dashboardTile}', [DashboardTileController::class, 'update'])
+        ->name('dashboard-tiles.update');
 
     Route::get('companies', [CompanyController::class, 'index']);
 

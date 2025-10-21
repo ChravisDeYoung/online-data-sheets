@@ -31,7 +31,7 @@
             class="h-full px-3 py-4 overflow-y-auto bg-white shadow dark:border dark:bg-gray-800 dark:border-gray-700">
             <ul class="space-y-2 font-medium">
                 <li>
-                    <a href="/"
+                    <a href="/dashboard"
                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <x-icon name="dashboard"/>
                         <span class="ms-3">Dashboard</span>
@@ -69,6 +69,14 @@
                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <x-icon name="pages"/>
                         <span class="flex-1 ms-3 whitespace-nowrap">Pages</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/dashboard-tiles"
+                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <x-icon name="dashboard-tiles"/>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Dashboard Tiles</span>
                     </a>
                 </li>
 

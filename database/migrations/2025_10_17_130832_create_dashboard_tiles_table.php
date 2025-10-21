@@ -10,7 +10,7 @@ class CreateDashboardTilesTable extends Migration
     {
         Schema::create('dashboard_tiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('page_id')->constrained();
+            $table->foreignId('page_id')->nullable()->constrained();
             $table->foreignId('parent_dashboard_tile_id')->nullable()->constrained('dashboard_tiles');
             $table->string('title');
             $table->integer('sort_order');

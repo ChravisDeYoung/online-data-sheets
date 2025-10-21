@@ -18,7 +18,7 @@ class CreateFieldsTable extends Migration
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('page_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('page_id')->constrained();
             $table->string('name');
             $table->tinyInteger('type')->default(Field::TYPE_TEXT);
             $table->string('subsection');
