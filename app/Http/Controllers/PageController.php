@@ -53,7 +53,8 @@ class PageController extends Controller
 
         $page->update($validated);
 
-        return redirect()->route('pages.index')->with('success', 'Page updated');
+        return redirect()->route('pages.index')
+            ->with('success', 'Page updated');
     }
 
     private function validatePage(?Page $page = null): array

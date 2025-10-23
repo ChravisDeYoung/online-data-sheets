@@ -53,12 +53,18 @@ Route::middleware('auth')->group(function () {
     Route::get('fields/{field}/edit', [FieldController::class, 'edit']);
     Route::patch('fields/{field}', [FieldController::class, 'update']);
 
-    Route::get('pages', [PageController::class, 'index'])->name('pages.index');
-    Route::get('pages/create', [PageController::class, 'create'])->name('pages.create');
-    Route::post('pages', [PageController::class, 'store'])->name('pages.store');
-    Route::get('pages/{page:slug}', [PageController::class, 'show'])->name('pages.show');
-    Route::get('pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
-    Route::patch('pages/{page}', [PageController::class, 'update'])->name('pages.update');
+    Route::get('pages', [PageController::class, 'index'])
+        ->name('pages.index');
+    Route::get('pages/create', [PageController::class, 'create'])
+        ->name('pages.create');
+    Route::post('pages', [PageController::class, 'store'])
+        ->name('pages.store');
+    Route::get('pages/{page:slug}', [PageController::class, 'show'])
+        ->name('pages.show');
+    Route::get('pages/{page}/edit', [PageController::class, 'edit'])
+        ->name('pages.edit');
+    Route::patch('pages/{page}', [PageController::class, 'update'])
+        ->name('pages.update');
 });
 
 Route::get('login', [SessionController::class, 'create'])->name('login');

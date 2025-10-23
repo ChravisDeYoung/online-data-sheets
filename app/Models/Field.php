@@ -24,6 +24,9 @@ class Field extends Model
         'subsection',
         'subsection_sort_order',
         'sort_order',
+        'minimum',
+        'maximum',
+        'select_options',
     ];
 
     protected $with = ['page'];

@@ -24,6 +24,9 @@ class CreateFieldsTable extends Migration
             $table->string('subsection');
             $table->integer('subsection_sort_order');
             $table->integer('sort_order');
+            $table->decimal('minimum')->nullable();
+            $table->decimal('maximum')->nullable();
+            $table->string('select_options')->nullable();
         });
     }
 

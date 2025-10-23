@@ -1,97 +1,44 @@
 @php use App\Models\Field; @endphp
 
-{{--<x-layout>--}}
-{{--    <h1>Welcome to the {{ $page->name }} page!</h1>--}}
-
-{{--    @foreach ($page->fields as $field)--}}
-{{--        @switch ($field->type)--}}
-{{--            @case(Field::TYPE_NUMBER)--}}
-{{--                @break--}}
-{{--            @case(Field::TYPE_DATE)--}}
-{{--                @break--}}
-{{--            @case(Field::TYPE_SELECT)--}}
-{{--                @break--}}
-{{--            @case(Field::TYPE_CHECKBOX)--}}
-{{--                @break--}}
-{{--            @case(Field::TYPE_TEXTAREA)--}}
-{{--                @break--}}
-{{--            @case(Field::TYPE_TEXT)--}}
-{{--            @default--}}
-{{--                <div>--}}
-{{--                    <label for="{{ $field->name }}">{{ $field->name }}</label>--}}
-{{--                    <input type="text" id="{{ $field->name }}" name="{{ $field->name }}">--}}
-{{--                </div>--}}
-{{--                @break--}}
-{{--        @endswitch--}}
-{{--    @endforeach--}}
-{{--</x-layout>--}}
-
 <x-layout>
     <x-table.wrapper>
         <x-slot name="title">List of fields</x-slot>
 
-        <x-table.table :headers="['Name', 'Round 1', 'Round 2', 'Round 3']">
-            <x-table.row>
-                <x-table.cell :header="true">Protein %</x-table.cell>
-                <x-table.cell>
-                    {{--                    cursor-not-allowed text-gray-900 dark:text-gray-400--}}
-                    <input
-                        class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-not-allowed text-gray-900 dark:text-gray-400"
-                        value="test 1" disabled readonly/>
-                </x-table.cell>
-                <x-table.cell><input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value="test 2"/>
-                </x-table.cell>
-                <x-table.cell><input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value="test 3"/>
-                </x-table.cell>
-            </x-table.row>
+        <x-table.table :headers="['Name', 'Round 1',]">
+            @php $currentSubsection = null; @endphp
 
-            <x-table.row>
-                <x-table.cell :header="true">Moisture %</x-table.cell>
-                <x-table.cell>
-                    <input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                </x-table.cell>
-                <x-table.cell><input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                </x-table.cell>
-                <x-table.cell><input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                </x-table.cell>
-            </x-table.row>
+            @foreach ($page->fields as $field)
+                @if ($currentSubsection != $field->subsection)
+                    @php $currentSubsection = $field->subsection; @endphp
+                    <x-table.row class="bg-gray-200 dark:bg-gray-700">
+                        <x-table.cell :header="true" colspan="2" class="p-2 font-semibold text-xl">
+                            {{ $currentSubsection ?? 'General' }}
+                        </x-table.cell>
+                    </x-table.row>
+                @endif
 
-            <x-table.row>
-                <x-table.cell :header="true">pH</x-table.cell>
-                <x-table.cell>
-                    <input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                </x-table.cell>
-                <x-table.cell><input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                </x-table.cell>
-                <x-table.cell><input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                </x-table.cell>
-            </x-table.row>
+                <x-table.row>
+                    <x-table.row>
+                        <x-table.cell class="p-0 flex justify-between items-center text-gray-700 dark:text-gray-400">
+                            {{ $field->name }}
 
-            <x-table.row>
-                <x-table.cell :header="true">Colour</x-table.cell>
-                <x-table.cell>
-                    <input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                </x-table.cell>
-                <x-table.cell><input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                </x-table.cell>
-                <x-table.cell><input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                </x-table.cell>
-            </x-table.row>
+                            @if (!is_null($field->minimum) && !is_null($field->maximum))
+                                <span class="italic text-xs text-gray-700 dark:text-gray-400"> > {{ $field->minimum }} and < {{ $field->maximum }}</span>
+                            @elseif (!is_null($field->minimum))
+                                <span
+                                    class="italic text-xs text-gray-700 dark:text-gray-400"> > {{ $field->minimum }}</span>
+                            @elseif (!is_null($field->maximum))
+                                <span
+                                    class="italic text-xs text-gray-700 dark:text-gray-400"> < {{ $field->maximum }}</span>
+                            @endif
+                        </x-table.cell>
+
+                        <x-table.cell class="!py-1 !px-1">
+                            <x-data.input required type="{{ $field->type }}"/>
+                        </x-table.cell>
+                    </x-table.row>
+                </x-table.row>
+            @endforeach
         </x-table.table>
-
-        {{--        <x-table.pagination :paginator="$users"/>--}}
     </x-table.wrapper>
 </x-layout>
