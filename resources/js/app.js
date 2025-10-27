@@ -7,7 +7,11 @@ window.saveFieldData = function (inputElement, fieldId) {
     fieldId,
     value: inputElement.value ? inputElement.value : null
   }
-  
+
+  if (inputElement.type === 'checkbox') {
+    postData.value = inputElement.checked ? "1" : "0";
+  }
+
   if (typeof fieldId === 'number') {
     fetch('/api/v1/field-data', {
       method: 'POST',

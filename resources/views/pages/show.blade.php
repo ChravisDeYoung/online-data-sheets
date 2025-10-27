@@ -4,7 +4,7 @@
     <x-table.wrapper>
         <x-slot name="title">List of fields</x-slot>
 
-        <x-table.table :headers="['Name', 'Round 1',]">
+        <x-table.table :headers="['Name', 'Round 1']">
             @php $currentSubsection = null; @endphp
 
             @foreach ($page->fields as $field)
@@ -34,9 +34,7 @@
                         </x-table.cell>
 
                         <x-table.cell class="!py-1 !px-1">
-                            <x-data.input required :type="$field->type" :field-id="$field->id"
-                                          :value="optional($field->fieldData)->value"
-                                          :is-out-of-range="optional($field->fieldData)->is_out_of_range"/>
+                            <x-data.input :field="$field"/>
                         </x-table.cell>
                     </x-table.row>
                 </x-table.row>
