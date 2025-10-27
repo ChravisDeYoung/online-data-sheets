@@ -12,6 +12,10 @@
                 <div class="w-full">
                     <x-form.input name="slug" type="text" required/>
                 </div>
+
+                <div class="w-full">
+                    <x-form.input name="column_count" type="number" required min="1" max="12"/>
+                </div>
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">

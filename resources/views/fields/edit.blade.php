@@ -58,6 +58,11 @@
                     <x-form.input name="sort_order" type="number" :value="old('sort_order', $field->sort_order)"
                                   required/>
                 </div>
+
+                <div class="w-full">
+                    <x-form.input name="required_columns" type="text" required
+                                  :value="old('required_columns', $field->required_columns)"/>
+                </div>
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">

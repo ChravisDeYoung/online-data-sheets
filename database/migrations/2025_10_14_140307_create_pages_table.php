@@ -18,6 +18,7 @@ class CreatePagesTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('slug');
+            $table->integer('column_count')->default(1);
         });
     }
 

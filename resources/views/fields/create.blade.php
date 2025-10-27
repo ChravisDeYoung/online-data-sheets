@@ -48,6 +48,10 @@
                 <div class="w-full">
                     <x-form.input name="sort_order" type="number" required/>
                 </div>
+
+                <div class="w-full">
+                    <x-form.input name="required_columns" type="text" required/>
+                </div>
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">

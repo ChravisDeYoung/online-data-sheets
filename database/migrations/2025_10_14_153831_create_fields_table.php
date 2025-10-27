@@ -27,6 +27,7 @@ class CreateFieldsTable extends Migration
             $table->decimal('minimum')->nullable();
             $table->decimal('maximum')->nullable();
             $table->string('select_options')->nullable();
+            $table->string('required_columns')->default('1');
         });
     }
 

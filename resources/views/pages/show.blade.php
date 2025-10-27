@@ -2,9 +2,13 @@
 
 <x-layout>
     <x-table.wrapper>
-        <x-slot name="title">List of fields</x-slot>
+        <x-slot name="title">{{ $page->name }} - 2001-01-01</x-slot>
 
-        <x-table.table :headers="['Name', 'Round 1']">
+        @php
+            $headers = array_merge(['Name'], array_map(fn($i) => "Round $i", range(1, $page->column_count)));
+        @endphp
+
+        <x-table.table :headers="$headers" :center="true">
             @php $currentSubsection = null; @endphp
 
             @foreach ($page->fields as $field)
@@ -33,9 +37,13 @@
                             @endif
                         </x-table.cell>
 
-                        <x-table.cell class="!py-1 !px-1">
-                            <x-data.input :field="$field"/>
-                        </x-table.cell>
+                        @for ($i = 1; $i <= $page->column_count; $i++)
+                            <x-table.cell class="!py-1 !px-1 text-center">
+                                @if (in_array($i, $field->required_columns_array, false))
+                                    <x-data.input :field="$field"/>
+                                @endif
+                            </x-table.cell>
+                        @endfor
                     </x-table.row>
                 </x-table.row>
             @endforeach

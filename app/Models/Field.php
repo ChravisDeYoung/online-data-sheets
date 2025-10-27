@@ -28,6 +28,7 @@ class Field extends Model
         'minimum',
         'maximum',
         'select_options',
+        'required_columns'
     ];
 
     protected $with = ['page'];
@@ -63,5 +64,13 @@ class Field extends Model
                     $query->where('name', 'like', '%' . $search . '%');
                 });
         });
+    }
+
+
+    public function getRequiredColumnsArrayAttribute()
+    {
+        return $this->required_columns
+            ? explode(',', $this->required_columns)
+            : [];
     }
 }

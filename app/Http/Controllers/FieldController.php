@@ -75,6 +75,7 @@ class FieldController extends Controller
             'subsection' => 'required|max:255',
             'subsection_sort_order' => 'required|integer|min:0',
             'sort_order' => 'required|integer|min:0',
+            'required_columns' => 'required|regex:/^\d+(,\d+)*$/'
         ]);
     }
 }

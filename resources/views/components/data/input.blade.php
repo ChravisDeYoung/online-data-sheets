@@ -1,5 +1,4 @@
 @php use App\Models\Field; @endphp
-{{--@props(['type' => 1, 'fieldId', 'isOutOfRange' => false])--}}
 @props(['field'])
 
 @switch ($field->type)

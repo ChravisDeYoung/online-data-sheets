@@ -18,6 +18,11 @@
                     <x-form.input name="slug" type="text" :value="old('slug', $page->slug)"
                                   required/>
                 </div>
+
+                <div class="w-full">
+                    <x-form.input name="column_count" type="number" required min="1" max="12"
+                                  :value="old('column_count', $page->column_count)"/>
+                </div>
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">

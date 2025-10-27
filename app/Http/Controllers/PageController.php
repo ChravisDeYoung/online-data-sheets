@@ -72,6 +72,7 @@ class PageController extends Controller
         return request()->validate([
             'name' => 'required|max:255',
             'slug' => 'required|max:255|unique:pages,slug,' . $page->id,
+            'column_count' => 'required|integer|min:1|max:12',
         ]);
     }
 }

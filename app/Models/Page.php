@@ -12,6 +12,7 @@ class Page extends Model
     protected $fillable = [
         'name',
         'slug',
+        'column_count'
     ];
 
     public function fields()
