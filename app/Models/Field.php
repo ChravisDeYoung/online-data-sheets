@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Field extends Model
 {
@@ -41,6 +42,11 @@ class Field extends Model
             self::TYPE_CHECKBOX => 'Checkbox',
             self::TYPE_TEXTAREA => 'Textarea',
         ];
+    }
+
+    public function fieldData(): HasOne
+    {
+        return $this->hasOne(FieldData::class);
     }
 
     public function page(): BelongsTo

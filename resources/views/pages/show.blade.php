@@ -8,7 +8,7 @@
             @php $currentSubsection = null; @endphp
 
             @foreach ($page->fields as $field)
-                @if ($currentSubsection != $field->subsection)
+                @if ($currentSubsection !== $field->subsection)
                     @php $currentSubsection = $field->subsection; @endphp
                     <x-table.row class="bg-gray-200 dark:bg-gray-700">
                         <x-table.cell :header="true" colspan="2" class="p-2 font-semibold text-xl">
@@ -34,7 +34,9 @@
                         </x-table.cell>
 
                         <x-table.cell class="!py-1 !px-1">
-                            <x-data.input required :type="$field->type" :field-id="$field->id"/>
+                            <x-data.input required :type="$field->type" :field-id="$field->id"
+                                          :value="optional($field->fieldData)->value"
+                                          :is-out-of-range="optional($field->fieldData)->is_out_of_range"/>
                         </x-table.cell>
                     </x-table.row>
                 </x-table.row>

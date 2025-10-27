@@ -29458,12 +29458,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flowbite__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flowbite */ "./node_modules/flowbite/lib/esm/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.saveFieldData = function (inputValue, fieldId) {
+window.saveFieldData = function (inputElement, fieldId) {
   var postData = {
     fieldId: fieldId,
-    value: inputValue
+    value: inputElement.value ? inputElement.value : null
   };
-  if (typeof fieldId === 'number' && inputValue) {
+  if (typeof fieldId === 'number') {
     fetch('/api/v1/field-data', {
       method: 'POST',
       headers: {
@@ -29476,9 +29476,11 @@ window.saveFieldData = function (inputValue, fieldId) {
       }
       return response.json(); // parse JSON body
     }).then(function (data) {
-      console.log('data', data);
-      console.log('fieldData:', data.fieldData);
-      console.log('message:', data.message);
+      if (data.isOutOfRange) {
+        inputElement.classList.add('out-of-range');
+      } else {
+        inputElement.classList.remove('out-of-range');
+      }
     })["catch"](function (error) {
       console.error('error', error);
     });

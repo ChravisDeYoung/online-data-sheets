@@ -15,7 +15,7 @@ class StoreFieldDataRequest extends FormRequest
     {
         return [
             'fieldId' => 'required|integer|exists:fields,id',
-            'value' => 'required',
+            'value' => 'nullable|string',
         ];
     }
 

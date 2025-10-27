@@ -2,13 +2,13 @@ require('./bootstrap');
 
 import 'flowbite';
 
-window.saveFieldData = function (inputValue, fieldId) {
+window.saveFieldData = function (inputElement, fieldId) {
   const postData = {
     fieldId,
-    value: inputValue
+    value: inputElement.value ? inputElement.value : null
   }
-
-  if (typeof fieldId === 'number' && inputValue) {
+  
+  if (typeof fieldId === 'number') {
     fetch('/api/v1/field-data', {
       method: 'POST',
       headers: {
@@ -23,9 +23,11 @@ window.saveFieldData = function (inputValue, fieldId) {
         return response.json(); // parse JSON body
       })
       .then(data => {
-        console.log('data', data);
-        console.log('fieldData:', data.fieldData);
-        console.log('message:', data.message);
+        if (data.isOutOfRange) {
+          inputElement.classList.add('out-of-range');
+        } else {
+          inputElement.classList.remove('out-of-range');
+        }
       })
       .catch(error => {
         console.error('error', error);

@@ -41,7 +41,9 @@ class PageController extends Controller
 
     public function show(Page $page): View
     {
-        return view('pages.show', ['page' => $page]);
+        return view('pages.show', [
+            'page' => $page->load('fields.fieldData')
+        ]);
     }
 
     public function edit(Page $page): View

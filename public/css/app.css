@@ -11,13 +11,13 @@
     --color-red-200: #FECACA;
     --color-red-500: #EF4444;
     --color-red-800: #991B1B;
-    --color-orange-100: #FEEBC8;
-    --color-orange-200: #FBD38D;
-    --color-orange-500: #DD6B20;
-    --color-orange-700: #9C4221;
+    --color-yellow-50: #FFFBEB;
     --color-yellow-100: #FEF3C7;
     --color-yellow-200: #FDE68A;
+    --color-yellow-300: #FCD34D;
     --color-yellow-500: #F59E0B;
+    --color-yellow-600: #D97706;
+    --color-yellow-700: #B45309;
     --color-yellow-800: #92400E;
     --color-green-100: #D1FAE5;
     --color-green-200: #A7F3D0;
@@ -292,9 +292,6 @@
   .right-0 {
     right: calc(var(--spacing) * 0);
   }
-  .right-3 {
-    right: calc(var(--spacing) * 3);
-  }
   .right-4 {
     right: calc(var(--spacing) * 4);
   }
@@ -303,12 +300,6 @@
   }
   .bottom-1 {
     bottom: calc(var(--spacing) * 1);
-  }
-  .bottom-2 {
-    bottom: calc(var(--spacing) * 2);
-  }
-  .bottom-3 {
-    bottom: calc(var(--spacing) * 3);
   }
   .bottom-\[60px\] {
     bottom: 60px;
@@ -959,9 +950,6 @@
   .bg-green-100 {
     background-color: var(--color-green-100);
   }
-  .bg-orange-100 {
-    background-color: var(--color-orange-100);
-  }
   .bg-red-100 {
     background-color: var(--color-red-100);
   }
@@ -1181,9 +1169,6 @@
   }
   .text-green-500 {
     color: var(--color-green-500);
-  }
-  .text-orange-500 {
-    color: var(--color-orange-500);
   }
   .text-red-500 {
     color: var(--color-red-500);
@@ -1828,11 +1813,6 @@
       background-color: var(--color-green-800);
     }
   }
-  .dark\:bg-orange-700 {
-    @media (prefers-color-scheme: dark) {
-      background-color: var(--color-orange-700);
-    }
-  }
   .dark\:bg-red-800 {
     @media (prefers-color-scheme: dark) {
       background-color: var(--color-red-800);
@@ -1886,11 +1866,6 @@
   .dark\:text-green-200 {
     @media (prefers-color-scheme: dark) {
       color: var(--color-green-200);
-    }
-  }
-  .dark\:text-orange-200 {
-    @media (prefers-color-scheme: dark) {
-      color: var(--color-orange-200);
     }
   }
   .dark\:text-red-200 {
@@ -2054,6 +2029,18 @@
       &:focus {
         --tw-ring-color: var(--color-gray-700);
       }
+    }
+  }
+}
+@layer components {
+  .out-of-range {
+    border-color: var(--color-yellow-300) !important;
+    background-color: var(--color-yellow-50) !important;
+    @media (prefers-color-scheme: dark) {
+      border-color: var(--color-yellow-600) !important;
+    }
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-yellow-700) !important;
     }
   }
 }
@@ -2710,5 +2697,4 @@
     }
   }
 }
-
 

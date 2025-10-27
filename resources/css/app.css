@@ -10,3 +10,8 @@
 
 @source "../node_modules/flowbite";
 
+@layer components {
+  .out-of-range {
+    @apply bg-yellow-50! border-yellow-300! dark:bg-yellow-700! dark:border-yellow-600!
+  }
+}
