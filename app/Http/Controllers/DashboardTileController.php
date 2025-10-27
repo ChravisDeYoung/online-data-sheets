@@ -36,7 +36,10 @@ class DashboardTileController extends Controller
         DashboardTile::create($attributes);
 
         return redirect('/dashboard-tiles')
-            ->with('success', 'New dashboard tile has been created.');
+            ->with([
+                'status' => 'success',
+                'message' => 'New dashboard tile has been created.'
+            ]);
     }
 
     public function edit(DashboardTile $dashboardTile)
@@ -58,7 +61,10 @@ class DashboardTileController extends Controller
 
         return redirect()
             ->route('dashboard-tiles.index')
-            ->with('success', 'Dashboard tile updated');
+            ->with([
+                'status' => 'success',
+                'message' => 'Dashboard tile updated.'
+            ]);
     }
 
     private function validateDashboardTile(?DashboardTile $dashboardTile = null): array

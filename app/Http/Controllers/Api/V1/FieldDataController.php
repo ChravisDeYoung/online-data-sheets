@@ -10,8 +10,11 @@ class FieldDataController extends Controller
 {
     public function store(StoreFieldDataRequest $request)
     {
-        FieldData::create($request->mappedAttributes());
+        $fieldData = FieldData::create($request->mappedAttributes());
 
-        return 'success';
+        return response()->json([
+            'fieldData' => $fieldData->id,
+            'message' => 'Field data created successfully.',
+        ], 201);
     }
 }

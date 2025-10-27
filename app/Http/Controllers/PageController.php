@@ -33,7 +33,10 @@ class PageController extends Controller
 
         Page::create($attributes);
 
-        return redirect('/pages')->with('success', 'New page has been created.');
+        return redirect('/pages')->with([
+            'status' => 'success',
+            'message' => 'New page has been created.'
+        ]);
     }
 
     public function show(Page $page): View
@@ -54,7 +57,10 @@ class PageController extends Controller
         $page->update($validated);
 
         return redirect()->route('pages.index')
-            ->with('success', 'Page updated');
+            ->with([
+                'status' => 'success',
+                'message' => 'Page updated'
+            ]);
     }
 
     private function validatePage(?Page $page = null): array

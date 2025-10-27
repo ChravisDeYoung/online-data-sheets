@@ -34,7 +34,7 @@
                         </x-table.cell>
 
                         <x-table.cell class="!py-1 !px-1">
-                            <x-data.input required type="{{ $field->type }}"/>
+                            <x-data.input required :type="$field->type" :field-id="$field->id"/>
                         </x-table.cell>
                     </x-table.row>
                 </x-table.row>

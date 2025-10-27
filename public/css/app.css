@@ -7,7 +7,22 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-100: #FEE2E2;
+    --color-red-200: #FECACA;
     --color-red-500: #EF4444;
+    --color-red-800: #991B1B;
+    --color-orange-100: #FEEBC8;
+    --color-orange-200: #FBD38D;
+    --color-orange-500: #DD6B20;
+    --color-orange-700: #9C4221;
+    --color-yellow-100: #FEF3C7;
+    --color-yellow-200: #FDE68A;
+    --color-yellow-500: #F59E0B;
+    --color-yellow-800: #92400E;
+    --color-green-100: #D1FAE5;
+    --color-green-200: #A7F3D0;
+    --color-green-500: #10B981;
+    --color-green-800: #065F46;
     --color-blue-50: #EFF6FF;
     --color-blue-100: #DBEAFE;
     --color-blue-300: #93C5FD;
@@ -31,6 +46,7 @@
     --color-white: #ffffff;
     --spacing: 0.25rem;
     --breakpoint-xl: 80rem;
+    --container-xs: 20rem;
     --container-md: 28rem;
     --container-xl: 36rem;
     --container-2xl: 42rem;
@@ -276,8 +292,23 @@
   .right-0 {
     right: calc(var(--spacing) * 0);
   }
+  .right-3 {
+    right: calc(var(--spacing) * 3);
+  }
+  .right-4 {
+    right: calc(var(--spacing) * 4);
+  }
   .bottom-0 {
     bottom: calc(var(--spacing) * 0);
+  }
+  .bottom-1 {
+    bottom: calc(var(--spacing) * 1);
+  }
+  .bottom-2 {
+    bottom: calc(var(--spacing) * 2);
+  }
+  .bottom-3 {
+    bottom: calc(var(--spacing) * 3);
   }
   .bottom-\[60px\] {
     bottom: 60px;
@@ -321,11 +352,20 @@
       max-width: 96rem;
     }
   }
+  .-mx-1\.5 {
+    margin-inline: calc(var(--spacing) * -1.5);
+  }
   .mx-auto {
     margin-inline: auto;
   }
+  .-my-1\.5 {
+    margin-block: calc(var(--spacing) * -1.5);
+  }
   .ms-3 {
     margin-inline-start: calc(var(--spacing) * 3);
+  }
+  .ms-auto {
+    margin-inline-start: auto;
   }
   .-mt-px {
     margin-top: -1px;
@@ -500,6 +540,9 @@
   }
   .max-w-xl {
     max-width: var(--container-xl);
+  }
+  .max-w-xs {
+    max-width: var(--container-xs);
   }
   .flex-1 {
     flex: 1;
@@ -913,6 +956,15 @@
       background-color: color-mix(in oklab, var(--color-gray-900) 50%, transparent);
     }
   }
+  .bg-green-100 {
+    background-color: var(--color-green-100);
+  }
+  .bg-orange-100 {
+    background-color: var(--color-orange-100);
+  }
+  .bg-red-100 {
+    background-color: var(--color-red-100);
+  }
   .bg-white {
     background-color: var(--color-white);
   }
@@ -921,6 +973,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-white) 50%, transparent);
     }
+  }
+  .bg-yellow-100 {
+    background-color: var(--color-yellow-100);
   }
   .dark {
     & .selectedCell {
@@ -1019,9 +1074,6 @@
   }
   .text-right {
     text-align: right;
-  }
-  .align-middle {
-    vertical-align: middle;
   }
   .text-2xl {
     font-size: var(--text-2xl);
@@ -1127,11 +1179,20 @@
   .text-gray-900 {
     color: var(--color-gray-900);
   }
+  .text-green-500 {
+    color: var(--color-green-500);
+  }
+  .text-orange-500 {
+    color: var(--color-orange-500);
+  }
   .text-red-500 {
     color: var(--color-red-500);
   }
   .text-white {
     color: var(--color-white);
+  }
+  .text-yellow-500 {
+    color: var(--color-yellow-500);
   }
   .text-zinc-600 {
     color: var(--color-zinc-600);
@@ -1762,6 +1823,26 @@
       }
     }
   }
+  .dark\:bg-green-800 {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-green-800);
+    }
+  }
+  .dark\:bg-orange-700 {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-orange-700);
+    }
+  }
+  .dark\:bg-red-800 {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-red-800);
+    }
+  }
+  .dark\:bg-yellow-800 {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-yellow-800);
+    }
+  }
   .dark\:text-blue-300 {
     @media (prefers-color-scheme: dark) {
       color: var(--color-blue-300);
@@ -1802,9 +1883,29 @@
       color: var(--color-gray-500);
     }
   }
+  .dark\:text-green-200 {
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-green-200);
+    }
+  }
+  .dark\:text-orange-200 {
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-orange-200);
+    }
+  }
+  .dark\:text-red-200 {
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-red-200);
+    }
+  }
   .dark\:text-white {
     @media (prefers-color-scheme: dark) {
       color: var(--color-white);
+    }
+  }
+  .dark\:text-yellow-200 {
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-yellow-200);
     }
   }
   .dark\:text-zinc-400 {

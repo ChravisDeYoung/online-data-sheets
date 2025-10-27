@@ -26,7 +26,10 @@ class UserController extends Controller
 
         User::create($attributes);
 
-        return redirect('/users')->with('success', 'New account has been created.');
+        return redirect('/users')->with([
+            'status' => 'success',
+            'message' => 'New user has been created.'
+        ]);
     }
 
     public function edit(User $user): View
@@ -46,7 +49,10 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('users.index')->with('success', 'User updated');
+        return redirect()->route('users.index')->with([
+            'status' => 'success',
+            'message' => 'User updated'
+        ]);
     }
 
     private function validateUser(?User $user = null): array

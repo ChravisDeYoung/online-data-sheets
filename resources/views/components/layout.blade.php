@@ -105,6 +105,8 @@
     {{ $slot }}
 </div>
 
+<x-flash/>
+
 <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

@@ -11,6 +11,6 @@ class FieldData extends Model
 
     protected $fillable = [
         'field_id',
-        'data',
+        'value',
     ];
 }

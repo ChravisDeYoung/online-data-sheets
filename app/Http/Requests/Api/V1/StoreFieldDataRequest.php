@@ -14,18 +14,16 @@ class StoreFieldDataRequest extends FormRequest
     public function rules()
     {
         return [
-            'data' => 'required|array',
-            'data.attributes' => 'required|array',
-            'data.attributes.field_id' => 'required|integer|exists:fields,id',
-            'data.attributes.value' => 'required',
+            'fieldId' => 'required|integer|exists:fields,id',
+            'value' => 'required',
         ];
     }
 
     public function mappedAttributes(array $otherAttributes = [])
     {
         $attributeMap = array_merge([
-            'data.attributes.field_id' => 'field_id',
-            'data.attributes.value' => 'value',
+            'fieldId' => 'field_id',
+            'value' => 'value',
         ], $otherAttributes);
 
         $attributesToUpdate = [];

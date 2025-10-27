@@ -29458,6 +29458,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flowbite__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flowbite */ "./node_modules/flowbite/lib/esm/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+window.saveFieldData = function (inputValue, fieldId) {
+  var postData = {
+    fieldId: fieldId,
+    value: inputValue
+  };
+  if (typeof fieldId === 'number' && inputValue) {
+    fetch('/api/v1/field-data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    }).then(function (response) {
+      if (!response.ok) {
+        throw new Error("HTTP error! status: ".concat(response.status));
+      }
+      return response.json(); // parse JSON body
+    }).then(function (data) {
+      console.log('data', data);
+      console.log('fieldData:', data.fieldData);
+      console.log('message:', data.message);
+    })["catch"](function (error) {
+      console.error('error', error);
+    });
+  }
+};
 
 /***/ }),
 
