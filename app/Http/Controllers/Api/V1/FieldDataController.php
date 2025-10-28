@@ -13,7 +13,7 @@ class FieldDataController extends Controller
         $attributes = $request->mappedAttributes();
 
         $fieldData = FieldData::updateOrCreate(
-            ['field_id' => $attributes['field_id']], // what we match on
+            ['field_id' => $attributes['field_id'], 'column' => $attributes['column'], 'page_date' => $attributes['page_date']], // what we match on
             ['value' => $attributes['value']]        // data to update or create
         );
 

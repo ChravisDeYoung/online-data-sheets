@@ -41,8 +41,21 @@ class PageController extends Controller
 
     public function show(Page $page): View
     {
+        $pageDate = request('date') && strtotime(request('date'))
+            ? date('Y-m-d', strtotime(request('date')))
+            : date('Y-m-d');
+        $page->load([
+            'fields' => function ($query) {
+                $query->orderBy('subsection_sort_order')->orderBy('sort_order');
+            },
+            'fields.fieldData' => function ($query) use ($pageDate) {
+                $query->where('page_date', $pageDate);
+            }
+        ]);
+
         return view('pages.show', [
-            'page' => $page->load('fields.fieldData')
+            'page' => $page,
+            'pageDate' => $pageDate
         ]);
     }
 

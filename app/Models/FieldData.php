@@ -11,8 +11,10 @@ class FieldData extends Model
     use HasFactory;
 
     protected $fillable = [
+        'column',
         'field_id',
         'value',
+        'page_date'
     ];
 
     public function field(): BelongsTo

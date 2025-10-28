@@ -1,12 +1,26 @@
 @php use App\Models\Field; @endphp
+@php
+    $headers = array_merge(['Name'], array_map(fn($i) => "Round $i", range(1, $page->column_count)));
+@endphp
 
 <x-layout>
     <x-table.wrapper>
-        <x-slot name="title">{{ $page->name }} - 2001-01-01</x-slot>
+        <x-slot name="title">
+            <div class="flex justify-between">
+                {{ $page->name }} - {{ $pageDate }}
 
-        @php
-            $headers = array_merge(['Name'], array_map(fn($i) => "Round $i", range(1, $page->column_count)));
-        @endphp
+                <div>
+                    <x-form.button variant="secondary"
+                                   href="/pages/{{ $page->slug }}?date={{ date('Y-m-d', strtotime($pageDate . ' -1 day')) }}"
+                                   class="mr-2">Prev
+                    </x-form.button>
+                    <x-form.button variant="secondary"
+                                   href="/pages/{{ $page->slug }}?date={{ date('Y-m-d', strtotime($pageDate . ' +1 day')) }}">
+                        Next
+                    </x-form.button>
+                </div>
+            </div>
+        </x-slot>
 
         <x-table.table :headers="$headers" :center="true">
             @php $currentSubsection = null; @endphp
@@ -40,7 +54,7 @@
                         @for ($i = 1; $i <= $page->column_count; $i++)
                             <x-table.cell class="!py-1 !px-1 text-center">
                                 @if (in_array($i, $field->required_columns_array, false))
-                                    <x-data.input :field="$field"/>
+                                    <x-data.input :field="$field" :column="$i" :date="$pageDate"/>
                                 @endif
                             </x-table.cell>
                         @endfor

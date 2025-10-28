@@ -29458,15 +29458,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flowbite__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flowbite */ "./node_modules/flowbite/lib/esm/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.saveFieldData = function (inputElement, fieldId) {
+window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
   var postData = {
+    column: column,
     fieldId: fieldId,
-    value: inputElement.value ? inputElement.value : null
+    value: inputElement.value ? inputElement.value : null,
+    pageDate: pageDate
   };
   if (inputElement.type === 'checkbox') {
     postData.value = inputElement.checked ? "1" : "0";
   }
-  if (typeof fieldId === 'number') {
+  if (typeof fieldId === 'number' && typeof column === 'number') {
     fetch('/api/v1/field-data', {
       method: 'POST',
       headers: {

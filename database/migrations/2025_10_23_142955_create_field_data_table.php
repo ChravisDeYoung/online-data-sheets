@@ -15,9 +15,13 @@ class CreateFieldDataTable extends Migration
     {
         Schema::create('field_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('field_id')->unique()->constrained();
+            $table->foreignId('field_id')->constrained();
             $table->string('value')->nullable();
+            $table->integer('column');
+            $table->date('page_date');
             $table->timestamps();
+
+            $table->unique(['field_id', 'column', 'page_date']);
         });
     }
 

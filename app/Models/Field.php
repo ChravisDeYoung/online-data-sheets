@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Field extends Model
 {
@@ -45,9 +45,9 @@ class Field extends Model
         ];
     }
 
-    public function fieldData(): HasOne
+    public function fieldData(): HasMany
     {
-        return $this->hasOne(FieldData::class);
+        return $this->hasMany(FieldData::class);
     }
 
     public function page(): BelongsTo

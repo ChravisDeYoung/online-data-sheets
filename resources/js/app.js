@@ -2,17 +2,19 @@ require('./bootstrap');
 
 import 'flowbite';
 
-window.saveFieldData = function (inputElement, fieldId) {
+window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
   const postData = {
+    column,
     fieldId,
-    value: inputElement.value ? inputElement.value : null
+    value: inputElement.value ? inputElement.value : null,
+    pageDate
   }
 
   if (inputElement.type === 'checkbox') {
     postData.value = inputElement.checked ? "1" : "0";
   }
 
-  if (typeof fieldId === 'number') {
+  if (typeof fieldId === 'number' && typeof column === 'number') {
     fetch('/api/v1/field-data', {
       method: 'POST',
       headers: {
