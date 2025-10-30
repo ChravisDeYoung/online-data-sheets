@@ -15,7 +15,7 @@ class CreateFieldDataTable extends Migration
     {
         Schema::create('field_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('field_id')->constrained();
+            $table->foreignId('field_id')->constrained()->restrictOnDelete();
             $table->string('value')->nullable();
             $table->integer('column');
             $table->date('page_date');

@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Field;
-use App\Models\User;
+use App\Models\Page;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +18,7 @@ class CreateFieldsTable extends Migration
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('page_id')->constrained();
+            $table->foreignIdFor(Page::class)->constrained()->restrictOnDelete();
             $table->string('name');
             $table->tinyInteger('type')->default(Field::TYPE_TEXT);
             $table->string('subsection');

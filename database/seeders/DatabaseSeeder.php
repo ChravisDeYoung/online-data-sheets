@@ -22,7 +22,13 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'De Jong',
             'email' => 'travis.dejong@eventconnect.io',
         ]);
-        User::factory(10)->create();
+        $users = User::factory(10)->create();
+
+//        Page::factory(10)
+//            ->has(Field::factory())
+//            ->create();
+
+//        $posts = Post::factory(10)->recycle($users)->create();
 
         // Create pages
         $safetyDataSheet = Page::create([
