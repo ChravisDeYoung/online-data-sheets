@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('login', [SessionController::class, 'create'])->name('login');
-Route::post('login', [SessionController::class, 'store']);
+Route::post('login', [SessionController::class, 'store'])->name('session.store');
 
 //Route::post('/register', function () {
 //    $validated = $this->validate(request(), [

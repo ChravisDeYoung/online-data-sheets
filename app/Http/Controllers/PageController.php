@@ -3,11 +3,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePageRequest;
-use App\Http\Requests\UpdatePageRequest;
 use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class PageController extends Controller
@@ -33,10 +30,12 @@ class PageController extends Controller
 
         Page::create($attributes);
 
-        return redirect('/pages')->with([
-            'status' => 'success',
-            'message' => 'New page has been created.'
-        ]);
+        return redirect()
+            ->route('pages.index')
+            ->with([
+                'status' => 'success',
+                'message' => 'New page has been created.'
+            ]);
     }
 
     public function show(Page $page): View
@@ -44,6 +43,7 @@ class PageController extends Controller
         $pageDate = request('date') && strtotime(request('date'))
             ? date('Y-m-d', strtotime(request('date')))
             : date('Y-m-d');
+
         $page->load([
             'fields' => function ($query) {
                 $query->orderBy('subsection_sort_order')->orderBy('sort_order');
@@ -64,14 +64,14 @@ class PageController extends Controller
         return view('pages.edit', ['page' => $page]);
     }
 
-
     public function update(Page $page): RedirectResponse
     {
         $validated = $this->validatePage($page);
 
         $page->update($validated);
 
-        return redirect()->route('pages.index')
+        return redirect()
+            ->route('pages.index')
             ->with([
                 'status' => 'success',
                 'message' => 'Page updated'

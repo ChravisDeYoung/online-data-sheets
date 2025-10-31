@@ -3,6 +3,15 @@
 use App\Models\Page;
 use App\Models\User;
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\post;
+
+it('requires authentication', function () {
+    $pageData = Page::factory()->make()->toArray();
+
+    post(route('pages.store'), $pageData)
+        ->assertRedirect(route('login'));
+});
 
 it('can create a page', function () {
     $pageData = Page::factory()->make()->toArray();
@@ -10,7 +19,7 @@ it('can create a page', function () {
     actingAs(User::factory()->create())
         ->post(route('pages.store'), $pageData);
 
-    $this->assertDatabaseHas('pages', $pageData);
+    assertDatabaseHas(Page::class, $pageData);
 });
 
 it('redirects to the pages index', function () {
@@ -18,7 +27,11 @@ it('redirects to the pages index', function () {
 
     actingAs(User::factory()->create())
         ->post(route('pages.store'), $pageData)
-        ->assertRedirect(route('pages.index'));
+        ->assertRedirect(route('pages.index'))
+        ->assertSessionHas([
+            'status' => 'success',
+            'message' => 'New page has been created.'
+        ]);
 });
 
 it('requires a valid name', function ($value) {

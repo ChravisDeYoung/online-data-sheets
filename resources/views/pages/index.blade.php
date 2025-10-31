@@ -20,7 +20,7 @@
                     <x-table.cell>
                         <a href="/pages/{{ $page->slug }}" class="underline">/pages/{{ $page->slug }}</a>
                     </x-table.cell>
-                    <x-table.cell>{{ $page->fields->count() }}</x-table.cell>
+                    <x-table.cell>{{ $page->fields->count() }} field(s)</x-table.cell>
 
                     <x-slot name="actions">
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
