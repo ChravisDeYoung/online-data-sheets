@@ -11,7 +11,9 @@ class UserController extends Controller
     public function index(): View
     {
         return view('users.index', [
-            'users' => User::search(request('search'))->paginate(10)
+            'users' => User::search(request('search'))
+                ->orderBy('id')
+                ->paginate(10)
         ]);
     }
 
@@ -26,7 +28,7 @@ class UserController extends Controller
 
         User::create($attributes);
 
-        return redirect('/users')->with([
+        return redirect(route('users.index'))->with([
             'status' => 'success',
             'message' => 'New user has been created.'
         ]);
@@ -63,12 +65,12 @@ class UserController extends Controller
         $passwordRequired = !$user->exists || request()->filled('password');
 
         return request()->validate([
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => "required|email|max:255|unique:users,email,$user->id",
             'phone_number' => 'required|max:255|phone:CA',
-            'password' => ($passwordRequired ? 'required|min:7|max:255|confirmed' : 'nullable'),
-            'password_confirmation' => ($passwordRequired ? 'required|min:7|max:255' : 'nullable'),
+            'password' => ($passwordRequired ? 'required|string|min:7|max:255|confirmed' : 'nullable'),
+            'password_confirmation' => ($passwordRequired ? 'required|string|min:7|max:255' : 'nullable'),
         ]);
     }
 }

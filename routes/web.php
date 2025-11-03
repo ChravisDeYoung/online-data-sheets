@@ -39,11 +39,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('companies', [CompanyController::class, 'index']);
 
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
-    Route::get('users/create', [UserController::class, 'create']);
-    Route::post('users', [UserController::class, 'store']);
-    Route::get('users/{user}/edit', [UserController::class, 'edit']);
-    Route::patch('users/{user}', [UserController::class, 'update']);
+    Route::get('users', [UserController::class, 'index'])
+        ->name('users.index');
+    Route::get('users/create', [UserController::class, 'create'])
+        ->name('users.create');
+    Route::post('users', [UserController::class, 'store'])
+        ->name('users.store');
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])
+        ->name('users.edit');
+    Route::patch('users/{user}', [UserController::class, 'update'])
+        ->name('users.update');
 
     Route::post('logout', [SessionController::class, 'destroy']);
 

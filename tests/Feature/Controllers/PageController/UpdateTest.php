@@ -6,8 +6,6 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\patch;
 
-//uses(RefreshDatabase::class); // do I need this?
-
 it('requires authentication', function () {
     $page = Page::factory()->create();
 
