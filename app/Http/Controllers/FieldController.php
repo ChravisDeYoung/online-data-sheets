@@ -28,10 +28,12 @@ class FieldController extends Controller
 
         Field::create($attributes);
 
-        return redirect('/fields')->with([
-            'status' => 'success',
-            'message' => 'New field has been created.'
-        ]);
+        return redirect()
+            ->route('fields.index')
+            ->with([
+                'status' => 'success',
+                'message' => 'New field has been created.'
+            ]);
     }
 
     public function edit(Field $field): View

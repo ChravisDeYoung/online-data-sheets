@@ -50,13 +50,19 @@ Route::middleware('auth')->group(function () {
     Route::patch('users/{user}', [UserController::class, 'update'])
         ->name('users.update');
 
-    Route::post('logout', [SessionController::class, 'destroy']);
+    Route::post('logout', [SessionController::class, 'destroy'])
+        ->name('logout');
 
-    Route::get('fields', [FieldController::class, 'index'])->name('fields.index');
-    Route::get('fields/create', [FieldController::class, 'create']);
-    Route::post('fields', [FieldController::class, 'store']);
-    Route::get('fields/{field}/edit', [FieldController::class, 'edit']);
-    Route::patch('fields/{field}', [FieldController::class, 'update']);
+    Route::get('fields', [FieldController::class, 'index'])
+        ->name('fields.index');
+    Route::get('fields/create', [FieldController::class, 'create'])
+        ->name('fields.create');
+    Route::post('fields', [FieldController::class, 'store'])
+        ->name('fields.store');
+    Route::get('fields/{field}/edit', [FieldController::class, 'edit'])
+        ->name('fields.edit');
+    Route::patch('fields/{field}', [FieldController::class, 'update'])
+        ->name('fields.update');
 
     Route::get('pages', [PageController::class, 'index'])
         ->name('pages.index');
@@ -72,8 +78,10 @@ Route::middleware('auth')->group(function () {
         ->name('pages.update');
 });
 
-Route::get('login', [SessionController::class, 'create'])->name('login');
-Route::post('login', [SessionController::class, 'store'])->name('session.store');
+Route::get('login', [SessionController::class, 'create'])
+    ->name('login');
+Route::post('login', [SessionController::class, 'store'])
+    ->name('session.store');
 
 //Route::post('/register', function () {
 //    $validated = $this->validate(request(), [

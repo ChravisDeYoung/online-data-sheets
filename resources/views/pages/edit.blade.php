@@ -5,7 +5,7 @@
                 class=" text-blue-600 dark:text-blue-600">{{ $page->name }}</span>
         </x-slot>
 
-        <form action="/pages/{{ $page->id }}" method="POST">
+        <form action="{{ route('pages.update', $page->id) }}" method="POST">
             @csrf
             @method('PATCH')
 
@@ -26,8 +26,7 @@
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">
-                <x-form.button href="/pages" variant="secondary">Cancel
-                </x-form.button>
+                <x-form.button href="{{ route('pages.index') }}" variant="secondary">Cancel</x-form.button>
                 <x-form.button class="ml-2 sm:ml-3">Update page</x-form.button>
             </div>
         </form>

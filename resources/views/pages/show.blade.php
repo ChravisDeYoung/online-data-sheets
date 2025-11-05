@@ -11,11 +11,11 @@
 
                 <div>
                     <x-form.button variant="secondary"
-                                   href="/pages/{{ $page->slug }}?date={{ date('Y-m-d', strtotime($pageDate . ' -1 day')) }}"
-                                   class="mr-2">Prev
+                                   href="{{ route('pages.show', [ $page->slug, 'date' => date('Y-m-d', strtotime($pageDate . ' -1 day')) ]) }}">
+                        class="mr-2">Prev
                     </x-form.button>
                     <x-form.button variant="secondary"
-                                   href="/pages/{{ $page->slug }}?date={{ date('Y-m-d', strtotime($pageDate . ' +1 day')) }}">
+                                   href="{{ route('pages.show', [ $page->slug, 'date' => date('Y-m-d', strtotime($pageDate . ' +1 day')) ]) }}">
                         Next
                     </x-form.button>
                 </div>

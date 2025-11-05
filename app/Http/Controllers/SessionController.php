@@ -26,19 +26,23 @@ class SessionController extends Controller
 
         session()->regenerate();
 
-        return redirect('/dashboard')->with([
-            'status' => 'success',
-            'message' => 'Welcome back!'
-        ]);
+        return redirect()
+            ->route('dashboard.index')
+            ->with([
+                'status' => 'success',
+                'message' => 'Welcome back!'
+            ]);
     }
 
     public function destroy()
     {
         auth()->logout();
 
-        return redirect('/login')->with([
-            'status' => 'success',
-            'message' => 'Goodbye!'
-        ]);
+        return redirect()
+            ->route('login')
+            ->with([
+                'status' => 'success',
+                'message' => 'Goodbye!'
+            ]);
     }
 }

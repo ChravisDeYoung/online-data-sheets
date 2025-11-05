@@ -35,7 +35,8 @@ class DashboardTileController extends Controller
 
         DashboardTile::create($attributes);
 
-        return redirect('/dashboard-tiles')
+        return redirect()
+            ->route('dashboard-tiles.index')
             ->with([
                 'status' => 'success',
                 'message' => 'New dashboard tile has been created.'
