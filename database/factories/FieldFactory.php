@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Field;
+use App\Models\Page;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FieldFactory extends Factory
@@ -31,6 +32,7 @@ class FieldFactory extends Factory
         }
 
         return [
+            'page_id' => Page::factory(),
             'name' => ucfirst($this->faker->word()),
             'type' => $type,
             'subsection' => ucfirst($this->faker->word()),

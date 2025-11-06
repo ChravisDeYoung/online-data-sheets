@@ -72,12 +72,15 @@ class FieldController extends Controller
 
         return request()->validate([
             'page_id' => 'required|exists:pages,id',
-            'name' => 'required|max:255',
-            'type' => 'required|max:15|in:' . implode(',', array_keys(Field::getTypes())),
-            'subsection' => 'required|max:255',
+            'name' => 'required|string|max:255',
+            'type' => 'required|integer|max:15|in:' . implode(',', array_keys(Field::getTypes())),
+            'subsection' => 'required|string|max:255',
             'subsection_sort_order' => 'required|integer|min:0',
             'sort_order' => 'required|integer|min:0',
-            'required_columns' => 'required|regex:/^\d+(,\d+)*$/'
+            'required_columns' => 'required|string|max:255|regex:/^\d+(,\d+)*$/',
+//            'minimum' => 'nullable|numeric|lt:maximum|required_if:type,' . Field::TYPE_NUMBER,
+//            'maximum' => 'nullable|numeric|gt:minimum|required_if:type,' . Field::TYPE_NUMBER,
+//            'select_options' => 'nullable|string|max:255|regex:/^[^,]+(,[^,]+)*$/|required_if:type,' . Field::TYPE_SELECT,
         ]);
     }
 }

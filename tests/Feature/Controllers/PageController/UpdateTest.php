@@ -77,8 +77,8 @@ it('requires a valid column_count', function ($value) {
     $page = Page::factory()->create();
 
     actingAs(User::factory()->create())
-        ->post(
-            route('pages.store', $page),
+        ->patch(
+            route('pages.update', $page),
             array_merge($page->toArray(), ['column_count' => $value]))
         ->assertInvalid('column_count');
 })
