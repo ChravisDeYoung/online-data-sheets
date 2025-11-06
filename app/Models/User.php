@@ -8,6 +8,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Class User
+ * @property int $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property string $phone_number
+ * @property string $password
+ * @property string $remember_token
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -15,7 +26,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var array<int, string> $fillable
      */
     protected $fillable = [
         'first_name',
@@ -28,7 +39,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var array<int, string> $hidden
      */
     protected $hidden = [
         'password',
@@ -38,17 +49,30 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @var array<string, string> $casts
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Set the user's password.
+     *
+     * @param $value
+     * @return void
+     */
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
     }
 
+    /**
+     * Search for users.
+     *
+     * @param $query
+     * @param $search
+     * @return void
+     */
     public function scopeSearch($query, $search)
     {
         $query->when($search, function () use ($query, $search) {

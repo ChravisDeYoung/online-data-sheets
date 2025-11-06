@@ -6,11 +6,34 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
+/**
+ * Class Field
+ *
+ * @property int $id
+ * @property int $page_id
+ * @property string $name
+ * @property int $type
+ * @property string $subsection
+ * @property int $subsection_sort_order
+ * @property int $sort_order
+ * @property string $minimum
+ * @property string $maximum
+ * @property string $select_options
+ * @property string $required_columns
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @mixin \Eloquent
+ * @package App\Models
+ */
 class Field extends Model
 {
     use HasFactory;
 
+    /**
+     * Field types
+     */
     public const TYPE_TEXT = 1;
     public const TYPE_NUMBER = 2;
     public const TYPE_DATE = 3;
@@ -18,6 +41,11 @@ class Field extends Model
     public const TYPE_CHECKBOX = 5;
     public const TYPE_TEXTAREA = 6;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string> $fillable
+     */
     protected $fillable = [
         'page_id',
         'name',
@@ -33,6 +61,10 @@ class Field extends Model
 
     protected $with = ['page'];
 
+    /**
+     * Get the types of fields.
+     * @return string[] The types of fields.
+     */
     public static function getTypes(): array
     {
         return [
@@ -45,16 +77,33 @@ class Field extends Model
         ];
     }
 
+    /**
+     * Get the field data.
+     *
+     * @return HasMany The field data.
+     */
     public function fieldData(): HasMany
     {
         return $this->hasMany(FieldData::class);
     }
 
+    /**
+     * Get the page that owns the field.
+     *
+     * @return BelongsTo The page that owns the field.
+     */
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
     }
 
+    /**
+     * Search for fields.
+     *
+     * @param $query
+     * @param $search
+     * @return void
+     */
     public function scopeSearch($query, $search)
     {
         $query->when($search, function () use ($query, $search) {
@@ -66,8 +115,12 @@ class Field extends Model
         });
     }
 
-
-    public function getRequiredColumnsArrayAttribute()
+    /**
+     * Get the required columns as an array.
+     *
+     * @return string[] The required columns as an array.
+     */
+    public function getRequiredColumnsArrayAttribute(): array
     {
         return $this->required_columns
             ? explode(',', $this->required_columns)

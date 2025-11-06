@@ -5,10 +5,20 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\StoreFieldDataRequest;
 use App\Models\FieldData;
+use Illuminate\Http\JsonResponse;
 
+/**
+ * Controller responsible for storing field data.
+ */
 class FieldDataController extends Controller
 {
-    public function store(StoreFieldDataRequest $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param StoreFieldDataRequest $request The request object containing the field data.
+     * @return JsonResponse The JSON response containing the field data ID and message.
+     */
+    public function store(StoreFieldDataRequest $request): JsonResponse
     {
         $attributes = $request->mappedAttributes();
 

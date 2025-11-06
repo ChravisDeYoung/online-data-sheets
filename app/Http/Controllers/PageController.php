@@ -7,8 +7,16 @@ use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
+/**
+ * Controller responsible for managing pages in the application.
+ */
 class PageController extends Controller
 {
+    /**
+     * Display a listing of the pages.
+     *
+     * @return View The view for displaying the pages.
+     */
     public function index(): View
     {
         return view('pages.index', [
@@ -19,11 +27,21 @@ class PageController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for creating a new page.
+     *
+     * @return View The view for creating a new page.
+     */
     public function create(): View
     {
         return view('pages.create');
     }
 
+    /**
+     * Store a newly created page in storage.
+     *
+     * @return RedirectResponse The redirect response after storing the page.
+     */
     public function store(): RedirectResponse
     {
         $attributes = $this->validatePage();
@@ -38,6 +56,11 @@ class PageController extends Controller
             ]);
     }
 
+    /**
+     * Display the specified page.
+     * @param Page $page The page to be displayed.
+     * @return View The view for displaying the page.
+     */
     public function show(Page $page): View
     {
         $pageDate = request('date') && strtotime(request('date'))
@@ -59,11 +82,23 @@ class PageController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified page.
+     *
+     * @param Page $page The page to be edited.
+     * @return View The view for editing the page.
+     */
     public function edit(Page $page): View
     {
         return view('pages.edit', ['page' => $page]);
     }
 
+    /**
+     * Update the specified page in storage.
+     *
+     * @param Page $page The page to be updated.
+     * @return RedirectResponse The redirect response after updating the page.
+     */
     public function update(Page $page): RedirectResponse
     {
         $validated = $this->validatePage($page);
@@ -78,6 +113,12 @@ class PageController extends Controller
             ]);
     }
 
+    /**
+     * Validate the request data for creating or updating a page.
+     *
+     * @param Page|null $page The page instance being validated, or null if a new instance is being created.
+     * @return array The validated data.
+     */
     private function validatePage(?Page $page = null): array
     {
         $page ??= new Page();

@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Controller responsible for managing users in the application.
+ */
 class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return View The view for displaying the users.
+     */
     public function index(): View
     {
         return view('users.index', [
@@ -17,12 +26,22 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return View The view for creating a new user.
+     */
     public function create(): View
     {
         return view('users.create');
     }
 
-    public function store()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return RedirectResponse The redirect response after storing the user.
+     */
+    public function store(): RedirectResponse
     {
         $attributes = $this->validateUser();
 
@@ -34,12 +53,25 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param User $user The user to be edited.
+     * @return View The view for editing the user.
+     */
     public function edit(User $user): View
     {
         return view('users.edit', ['user' => $user]);
     }
 
-    public function update(Request $request, User $user)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param User $user
+     * @return RedirectResponse
+     */
+    public function update(Request $request, User $user): RedirectResponse
     {
         $validated = $this->validateUser($user);
 
@@ -57,6 +89,12 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Validate the user data.
+     *
+     * @param User|null $user The user instance being validated, or null if a new instance is being created.
+     * @return array The validated data.
+     */
     private function validateUser(?User $user = null): array
     {
         $user ??= new User();

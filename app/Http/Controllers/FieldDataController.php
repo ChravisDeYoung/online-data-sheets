@@ -6,6 +6,9 @@ use App\Http\Requests\Api\V1\StoreFieldDataRequest;
 use App\Http\Requests\UpdateFieldDataRequest;
 use App\Models\FieldData;
 
+/**
+ * Controller responsible for storing field data.
+ */
 class FieldDataController extends Controller
 {
     /**

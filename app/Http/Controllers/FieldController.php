@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Field;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Controller responsible for managing Fields in the application.
+ */
 class FieldController extends Controller
 {
+    /**
+     * Display a listing of the Fields.
+     *
+     * @return View The view for displaying the Fields.
+     */
     public function index(): View
     {
         return view('fields.index', [
@@ -17,12 +26,22 @@ class FieldController extends Controller
                 ->paginate(10)]);
     }
 
+    /**
+     * Show the form for creating a new Field.
+     *
+     * @return View The view for creating a new Field.
+     */
     public function create(): View
     {
         return view('fields.create');
     }
 
-    public function store()
+    /**
+     * Store a newly created Field in storage.
+     *
+     * @return RedirectResponse The redirect response after storing the Field.
+     */
+    public function store(): RedirectResponse
     {
         $attributes = $this->validateField();
 
@@ -36,12 +55,25 @@ class FieldController extends Controller
             ]);
     }
 
+    /**
+     * Show the form for editing the specified Field.
+     *
+     * @param Field $field The Field to be edited.
+     * @return View The view for editing the Field.
+     */
     public function edit(Field $field): View
     {
         return view('fields.edit', ['field' => $field]);
     }
 
-    public function update(Request $request, Field $field)
+    /**
+     * Update the specified Field in storage.
+     *
+     * @param Request $request The request object containing the updated field data.
+     * @param Field $field The Field to be updated.
+     * @return RedirectResponse The redirect response after updating the Field.
+     */
+    public function update(Request $request, Field $field): RedirectResponse
     {
         $validated = $this->validateField($field);
 
@@ -56,16 +88,11 @@ class FieldController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Validate the request data for creating or updating a field.
      *
-     * @param \App\Models\Field $field
-     * @return \Illuminate\Http\Response
+     * @param Field|null $field The field instance being validated, or null if a new instance is being created.
+     * @return array The validated data.
      */
-    public function destroy(Field $field)
-    {
-        //
-    }
-
     private function validateField(?Field $field = null): array
     {
         $field ??= new Field();
