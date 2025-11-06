@@ -64,10 +64,10 @@ class PageController extends Controller
      */
     public function show(Page $page): View
     {
-        $parsedDate = strtotime(request('date'));
+        $dateParam = request('date');
 
-        $pageDate = request('date') && $parsedDate
-            ? Carbon::parse($parsedDate)
+        $pageDate = $dateParam && strtotime($dateParam)
+            ? Carbon::parse($dateParam)
             : Carbon::now();
 
         $page->load([

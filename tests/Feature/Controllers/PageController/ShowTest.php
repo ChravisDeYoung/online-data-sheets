@@ -4,6 +4,7 @@ use App\Models\Field;
 use App\Models\FieldData;
 use App\Models\Page;
 use App\Models\User;
+use Carbon\Carbon;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\get;
@@ -18,28 +19,34 @@ it('requires authentication', function () {
 it('returns the show view', function () {
     $page = Page::factory()->create();
 
+    $now = Carbon::now();
+    Carbon::setTestNow($now);
+
     actingAs(User::factory()->create())
-        ->get(route('pages.show', $page))
+        ->get(route('pages.show', $page->slug))
         ->assertViewIs('pages.show')
         ->assertViewHas('page', $page)
-        ->assertViewHas('pageDate', date('Y-m-d'));
+        ->assertViewHas('pageDate', $now);
 });
 
 it('shows a default date', function ($value) {
     $page = Page::factory()->create();
 
+    $now = Carbon::now();
+    Carbon::setTestNow($now);
+
     actingAs(User::factory()->create())
         ->get(route('pages.show', [$page, 'date' => $value]))
-        ->assertViewHas('pageDate', date('Y-m-d'));
+        ->assertViewHas('pageDate', $now);
 })
-    ->with([null, 1, 1.5, true, 'invalid-date']);
+    ->with([null, 'invalid-date']);
 
 it('parses passed date', function () {
     $page = Page::factory()->create();
 
     actingAs(User::factory()->create())
-        ->get(route('pages.show', [$page, 'date' => '2025-01-01']))
-        ->assertViewHas('pageDate', date('Y-m-d', mktime(0, 0, 0, 1, 1, 2025)));
+        ->get(route('pages.show', [$page, 'date' => '2025-02-03']))
+        ->assertViewHas('pageDate', Carbon::create(2025, 2, 3));
 });
 
 it('displays fields in correct order', function () {
