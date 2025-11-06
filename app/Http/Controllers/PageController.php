@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -63,9 +64,11 @@ class PageController extends Controller
      */
     public function show(Page $page): View
     {
-        $pageDate = request('date') && strtotime(request('date'))
-            ? date('Y-m-d', strtotime(request('date')))
-            : date('Y-m-d');
+        $parsedDate = strtotime(request('date'));
+
+        $pageDate = request('date') && $parsedDate
+            ? Carbon::parse($parsedDate)
+            : Carbon::now();
 
         $page->load([
             'fields' => function ($query) {

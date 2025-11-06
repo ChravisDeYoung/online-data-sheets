@@ -7,15 +7,15 @@
     <x-table.wrapper>
         <x-slot name="title">
             <div class="flex justify-between">
-                {{ $page->name }} - {{ $pageDate }}
+                {{ $page->name }} - {{ $pageDate->format('Y-m-d') }}
 
                 <div>
-                    <x-form.button variant="secondary"
-                                   href="{{ route('pages.show', [ $page->slug, 'date' => date('Y-m-d', strtotime($pageDate . ' -1 day')) ]) }}">
-                        class="mr-2">Prev
+                    <x-form.button variant="secondary" class="mr-2"
+                                   href="{{ route('pages.show', [ $page->slug, 'date' => $pageDate->copy()->subDays()->format('Y-m-d') ]) }}">
+                        Prev
                     </x-form.button>
                     <x-form.button variant="secondary"
-                                   href="{{ route('pages.show', [ $page->slug, 'date' => date('Y-m-d', strtotime($pageDate . ' +1 day')) ]) }}">
+                                   href="{{ route('pages.show', [ $page->slug, 'date' => $pageDate->copy()->addDays()->format('Y-m-d') ]) }}">
                         Next
                     </x-form.button>
                 </div>

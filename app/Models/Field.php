@@ -59,8 +59,6 @@ class Field extends Model
         'required_columns'
     ];
 
-    protected $with = ['page'];
-
     /**
      * Get the types of fields.
      * @return string[] The types of fields.
