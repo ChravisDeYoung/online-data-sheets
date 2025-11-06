@@ -52,6 +52,18 @@
                 <div class="w-full">
                     <x-form.input name="required_columns" type="text" required/>
                 </div>
+
+                <div class="w-full">
+                    <x-form.input name="minimum" type="number"/>
+                </div>
+
+                <div class="w-full">
+                    <x-form.input name="maximum" type="number"/>
+                </div>
+
+                <div class="w-full">
+                    <x-form.input name="select_options" type="text"/>
+                </div>
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">

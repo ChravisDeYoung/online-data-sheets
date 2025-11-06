@@ -110,3 +110,47 @@ it('requires a valid required_columns', function ($value) {
         ->assertInvalid('required_columns');
 })
     ->with([null, 1, 1.5, true, str_repeat('a', 256), '12,1515,', 'test,1']);
+
+it('requires a valid minimum', function ($value) {
+    $fieldData = Field::factory()
+        ->make([
+            'type' => $value === 5 ? Field::TYPE_TEXT : Field::TYPE_NUMBER,
+            'minimum' => $value,
+            'maximum' => 10,
+        ])
+        ->toArray();
+
+    actingAs(User::factory()->create())
+        ->post(route('fields.store'), $fieldData)
+        ->assertInvalid('minimum');
+})
+    ->with([11, 'test', 5]);
+
+it('requires a valid maximum', function ($value) {
+    $fieldData = Field::factory()
+        ->make([
+            'type' => $value === 15 ? Field::TYPE_TEXT : Field::TYPE_NUMBER,
+            'minimum' => 10,
+            'maximum' => $value,
+        ])
+        ->toArray();
+
+    actingAs(User::factory()->create())
+        ->post(route('fields.store'), $fieldData)
+        ->assertInvalid('maximum');
+})
+    ->with([9, 'test', 15]);
+
+it('requires a valid select_options', function ($value) {
+    $fieldData = Field::factory()
+        ->make([
+            'select_options' => $value,
+            'type' => $value === 'valid format,wrong type' ? Field::TYPE_TEXT : Field::TYPE_SELECT,
+        ])
+        ->toArray();
+
+    actingAs(User::factory()->create())
+        ->post(route('fields.store'), $fieldData)
+        ->assertInvalid('select_options');
+})
+    ->with([9, 1.5, true, null, 'invalid format 1,', ',invalid format 2', 'valid format,wrong type']);

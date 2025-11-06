@@ -16,18 +16,6 @@ it('requires authentication', function () {
         ->assertRedirect(route('login'));
 });
 
-//$table->id();
-//$table->timestamps();
-//$table->foreignIdFor(Page::class)->constrained()->restrictOnDelete();
-//$table->string('name');
-//$table->tinyInteger('type')->default(Field::TYPE_TEXT);
-//$table->string('subsection');
-//$table->integer('subsection_sort_order');
-//$table->integer('sort_order');
-//$table->decimal('minimum')->nullable();
-//$table->decimal('maximum')->nullable();
-//$table->string('select_options')->nullable();
-//$table->string('required_columns')->default('1');
 it('can update a field', function () {
     $page1 = Page::factory()->create();
     $field = Field::factory()->create([
@@ -38,6 +26,9 @@ it('can update a field', function () {
         'subsection_sort_order' => 1,
         'sort_order' => 1,
         'required_columns' => '1,3,5',
+        'minimum' => null,
+        'maximum' => null,
+        'select_options' => 'Low,Medium,High',
     ]);
 
     $page2 = Page::factory()->create();
@@ -49,9 +40,9 @@ it('can update a field', function () {
         'subsection_sort_order' => 2,
         'sort_order' => 2,
         'required_columns' => '2,4',
-//        'minimum' => 1,
-//        'maximum' => 10,
-//        'select_options' => null,
+        'minimum' => 1,
+        'maximum' => 10,
+        'select_options' => null,
     ];
 
     actingAs(User::factory()->create())
@@ -150,3 +141,47 @@ it('requires a valid required_columns', function ($value) {
         ->assertInvalid('required_columns');
 })
     ->with([null, 1, 1.5, true, str_repeat('a', 256), '12,1515,', 'test,1']);
+
+it('requires a valid minimum', function ($value) {
+    $field = Field::factory()->create();
+
+    actingAs(User::factory()->create())
+        ->patch(
+            route('fields.update', $field),
+            array_merge($field->toArray(), [
+                'type' => $value === 5 ? Field::TYPE_TEXT : Field::TYPE_NUMBER,
+                'minimum' => $value,
+                'maximum' => 10,
+            ]))
+        ->assertInvalid('minimum');
+})
+    ->with([11, 'test', 5]);
+
+it('requires a valid maximum', function ($value) {
+    $field = Field::factory()->create();
+
+    actingAs(User::factory()->create())
+        ->patch(
+            route('fields.update', $field),
+            array_merge($field->toArray(), [
+                'type' => $value === 15 ? Field::TYPE_TEXT : Field::TYPE_NUMBER,
+                'minimum' => 10,
+                'maximum' => $value,
+            ]))
+        ->assertInvalid('maximum');
+})
+    ->with([9, 'test', 15]);
+
+it('requires a valid select_options', function ($value) {
+    $field = Field::factory()->create();
+
+    actingAs(User::factory()->create())
+        ->patch(
+            route('fields.update', $field),
+            array_merge($field->toArray(), [
+                'select_options' => $value,
+                'type' => $value === 'valid format,wrong type' ? Field::TYPE_TEXT : Field::TYPE_SELECT,
+            ]))
+        ->assertInvalid('select_options');
+})
+    ->with([9, 1.5, true, null, 'invalid format 1,', ',invalid format 2', 'valid format,wrong type']);

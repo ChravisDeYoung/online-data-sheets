@@ -1,5 +1,5 @@
 @php
-    $pages = \App\Models\Page::all();
+    use App\Models\Field;$pages = \App\Models\Page::all();
 @endphp
 
 <x-layout>
@@ -35,7 +35,7 @@
                     <x-form.select name="type">
                         <option value="" disabled selected>Select a type</option>
 
-                        @foreach (\App\Models\Field::getTypes() as $typeValue => $typeName)
+                        @foreach (Field::getTypes() as $typeValue => $typeName)
                             <option value="{{ $typeValue }}"
                                     @if(old('type', $field->type) == $typeValue) selected @endif>
                                 {{ ucfirst($typeName) }}
@@ -62,6 +62,21 @@
                 <div class="w-full">
                     <x-form.input name="required_columns" type="text" required
                                   :value="old('required_columns', $field->required_columns)"/>
+                </div>
+
+                <div class="w-full">
+                    <x-form.input name="minimum" type="number"
+                                  :value="old('minimum', $field->minimum)"/>
+                </div>
+
+                <div class="w-full">
+                    <x-form.input name="maximum" type="number"
+                                  :value="old('maximum', $field->maximum)"/>
+                </div>
+
+                <div class="w-full">
+                    <x-form.input name="select_options" type="text"
+                                  :value="old('select_options', $field->select_options)"/>
                 </div>
             </div>
 
