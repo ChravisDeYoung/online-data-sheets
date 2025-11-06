@@ -22,7 +22,8 @@ class DashboardTileController extends Controller
     public function index(): View
     {
         return view('dashboard_tiles.index', [
-            'dashboardTiles' => DashboardTile::with('page')
+            'dashboardTiles' => DashboardTile::orderBy('sort_order')
+                ->with('page')
                 ->with('parentDashboardTile')
                 ->search(request('search'))
                 ->paginate(10)
@@ -70,7 +71,9 @@ class DashboardTileController extends Controller
     {
         return view('dashboard_tiles.edit', [
             'dashboardTile' => $dashboardTile,
-            'pages' => $dashboardTile->childrenDashboardTiles()->exists() ? [] : Page::all(),
+            'pages' => $dashboardTile->childrenDashboardTiles()->exists()
+                ? collect([])
+                : Page::all(),
             'dashboardTiles' => DashboardTile::whereNull('page_id')
                 ->where('id', '!=', $dashboardTile->id)
                 ->get(),
@@ -105,9 +108,7 @@ class DashboardTileController extends Controller
      */
     private function validateDashboardTile(?DashboardTile $dashboardTile = null): array
     {
-        if (!$dashboardTile) {
-            $dashboardTile = new DashboardTile();
-        }
+        $dashboardTile ??= new DashboardTile();
 
         return request()->validate([
             'page_id' => [
@@ -127,7 +128,7 @@ class DashboardTileController extends Controller
                 }),
                 'different:id'
             ],
-            'title' => 'required|max:255',
+            'title' => 'required|string|max:255',
             'sort_order' => 'required|integer|min:0',
         ]);
     }

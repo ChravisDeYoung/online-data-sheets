@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
 it('requires authentication', function () {
@@ -7,3 +9,8 @@ it('requires authentication', function () {
         ->assertredirect(route('login'));
 });
 
+it('returns the create view', function () {
+    actingAs(User::factory()->create())
+        ->get(route('pages.create'))
+        ->assertViewIs('pages.create');
+});

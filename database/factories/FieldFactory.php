@@ -6,9 +6,19 @@ use App\Models\Field;
 use App\Models\Page;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * Factory for creating Field model instances.
+ *
+ * @extends Factory<Field>
+ */
 class FieldFactory extends Factory
 {
-    public function definition()
+    /**
+     * Define the model's default state.'
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
     {
         $type = $this->faker->randomElement(array_keys(Field::getTypes()));
 

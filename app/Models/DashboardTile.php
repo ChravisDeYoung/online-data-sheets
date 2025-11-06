@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @mixin \Eloquent
  * @package App\Models
  */
-class DashboardTile extends Model
+class  DashboardTile extends Model
 {
     use HasFactory;
 
