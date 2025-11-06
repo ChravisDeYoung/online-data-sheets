@@ -21,7 +21,7 @@ class DashboardTileController extends Controller
      */
     public function index(): View
     {
-        return view('dashboard_tile.index', [
+        return view('dashboard_tiles.index', [
             'dashboardTiles' => DashboardTile::with('page')
                 ->with('parentDashboardTile')
                 ->search(request('search'))
@@ -36,7 +36,7 @@ class DashboardTileController extends Controller
      */
     public function create(): View
     {
-        return view('dashboard_tile.create', [
+        return view('dashboard_tiles.create', [
             'pages' => Page::all(),
             'dashboardTiles' => DashboardTile::whereNull('page_id')->get(),
         ]);
@@ -68,7 +68,7 @@ class DashboardTileController extends Controller
      */
     public function edit(DashboardTile $dashboardTile): View
     {
-        return view('dashboard_tile.edit', [
+        return view('dashboard_tiles.edit', [
             'dashboardTile' => $dashboardTile,
             'pages' => $dashboardTile->childrenDashboardTiles()->exists() ? [] : Page::all(),
             'dashboardTiles' => DashboardTile::whereNull('page_id')
