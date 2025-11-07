@@ -13,7 +13,7 @@ it('requires authentication', function () {
     $page = Page::factory()->create();
 
     get(route('pages.show', $page))
-        ->assertredirect(route('login'));
+        ->assertredirect(route('sessions.create'));
 });
 
 it('returns the show view', function () {

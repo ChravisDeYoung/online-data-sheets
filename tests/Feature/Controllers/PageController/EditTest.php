@@ -9,7 +9,7 @@ it('requires authentication', function () {
     $page = Page::factory()->create();
 
     get(route('pages.edit', $page))
-        ->assertredirect(route('login'));
+        ->assertredirect(route('sessions.create'));
 });
 
 it('returns the edit view', function () {

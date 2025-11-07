@@ -12,7 +12,7 @@ it('requires authentication', function () {
     patch(
         route('users.update', $user),
         ['first_name' => 'Updated Name'])
-        ->assertRedirect(route('login'));
+        ->assertRedirect(route('sessions.create'));
 });
 
 it('can update a user', function () {

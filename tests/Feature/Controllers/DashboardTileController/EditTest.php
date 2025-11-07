@@ -10,7 +10,7 @@ it('requires authentication', function () {
     $dashboardTile = DashboardTile::factory()->create();
 
     get(route('dashboard-tiles.edit', $dashboardTile))
-        ->assertredirect(route('login'));
+        ->assertredirect(route('sessions.create'));
 });
 
 it('returns the edit view', function () {

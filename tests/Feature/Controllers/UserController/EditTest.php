@@ -8,7 +8,7 @@ it('requires authentication', function () {
     $user = User::factory()->create();
 
     get(route('users.edit', $user))
-        ->assertredirect(route('login'));
+        ->assertredirect(route('sessions.create'));
 });
 
 it('returns the edit view', function () {

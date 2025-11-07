@@ -59,7 +59,7 @@ class SessionController extends Controller
         auth()->logout();
 
         return redirect()
-            ->route('login')
+            ->route('sessions.create')
             ->with([
                 'status' => 'success',
                 'message' => 'Goodbye!'

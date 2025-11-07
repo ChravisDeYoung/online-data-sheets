@@ -10,7 +10,7 @@ it('requires authentication', function () {
     $fieldData = Field::factory()->make()->toArray();
 
     post(route('fields.store'), $fieldData)
-        ->assertRedirect(route('login'));
+        ->assertRedirect(route('sessions.create'));
 });
 
 it('can create a field', function () {

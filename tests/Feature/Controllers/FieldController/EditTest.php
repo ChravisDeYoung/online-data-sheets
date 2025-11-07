@@ -9,7 +9,7 @@ it('requires authentication', function () {
     $field = Field::factory()->create();
 
     get(route('fields.edit', $field))
-        ->assertredirect(route('login'));
+        ->assertredirect(route('sessions.create'));
 });
 
 it('returns the edit view', function () {

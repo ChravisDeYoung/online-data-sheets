@@ -20,7 +20,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [SessionController::class, 'create'])
+        ->name('sessions.create');
+    Route::post('/login', [SessionController::class, 'store'])
+        ->name('sessions.store');
+});
+
 Route::middleware('auth')->group(function () {
+    Route::post('logout', [SessionController::class, 'destroy'])
+        ->name('sessions.destroy');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboards.index');
     Route::get('/dashboard/{dashboardTileId}', [DashboardController::class, 'show'])
@@ -50,9 +60,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('users/{user}', [UserController::class, 'update'])
         ->name('users.update');
 
-    Route::post('logout', [SessionController::class, 'destroy'])
-        ->name('logout');
-
     Route::get('fields', [FieldController::class, 'index'])
         ->name('fields.index');
     Route::get('fields/create', [FieldController::class, 'create'])
@@ -77,11 +84,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('pages/{page}', [PageController::class, 'update'])
         ->name('pages.update');
 });
-
-Route::get('login', [SessionController::class, 'create'])
-    ->name('login');
-Route::post('login', [SessionController::class, 'store'])
-    ->name('session.store');
 
 //Route::post('/register', function () {
 //    $validated = $this->validate(request(), [

@@ -9,7 +9,7 @@ it('requires authentication', function () {
     $dashboardTile = DashboardTile::factory()->create();
 
     get(route('dashboards.show', $dashboardTile->id))
-        ->assertredirect(route('login'));
+        ->assertredirect(route('sessions.create'));
 });
 
 it('returns the index view', function () {

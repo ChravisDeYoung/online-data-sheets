@@ -10,7 +10,7 @@ it('requires authentication', function () {
     $pageData = Page::factory()->make()->toArray();
 
     post(route('pages.store'), $pageData)
-        ->assertRedirect(route('login'));
+        ->assertRedirect(route('sessions.create'));
 });
 
 it('can create a page', function () {

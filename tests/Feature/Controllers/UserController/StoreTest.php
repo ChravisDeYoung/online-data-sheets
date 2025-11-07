@@ -9,7 +9,7 @@ it('requires authentication', function () {
     $userData = User::factory()->make()->toArray();
 
     post(route('users.store'), $userData)
-        ->assertRedirect(route('login'));
+        ->assertRedirect(route('sessions.create'));
 });
 
 it('can create a user', function () {

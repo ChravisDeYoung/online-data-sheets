@@ -13,7 +13,7 @@ it('requires authentication', function () {
     patch(
         route('dashboard-tiles.update', $dashboardTile),
         array_merge($dashboardTile->toArray(), ['title' => 'Updated Title']))
-        ->assertRedirect(route('login'));
+        ->assertRedirect(route('sessions.create'));
 });
 
 it('can update a dashboard_file', function () {

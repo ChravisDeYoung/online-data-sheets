@@ -12,7 +12,7 @@ it('requires authentication', function () {
     patch(
         route('pages.update', $page),
         ['name' => 'Updated Name'])
-        ->assertredirect('/login');
+        ->assertredirect(route('sessions.create'));
 });
 
 it('can update a page', function () {

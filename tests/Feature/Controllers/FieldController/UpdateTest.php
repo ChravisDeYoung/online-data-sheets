@@ -13,7 +13,7 @@ it('requires authentication', function () {
     patch(
         route('fields.update', $field),
         ['name' => 'Updated Name'])
-        ->assertRedirect(route('login'));
+        ->assertRedirect(route('sessions.create'));
 });
 
 it('can update a field', function () {

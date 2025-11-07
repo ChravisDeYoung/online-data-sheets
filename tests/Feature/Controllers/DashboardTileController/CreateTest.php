@@ -8,7 +8,7 @@ use function Pest\Laravel\get;
 
 it('requires authentication', function () {
     get(route('dashboard-tiles.create'))
-        ->assertredirect(route('login'));
+        ->assertredirect(route('sessions.create'));
 });
 
 it('returns the create view', function () {

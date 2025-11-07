@@ -9,7 +9,7 @@ use function Pest\Laravel\get;
 
 it('requires authentication', function () {
     get(route('dashboard-tiles.index'))
-        ->assertredirect(route('login'));
+        ->assertredirect(route('sessions.create'));
 });
 
 it('returns the index view', function () {

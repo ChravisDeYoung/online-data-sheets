@@ -10,7 +10,7 @@ it('requires authentication', function () {
     $dashboardTileData = DashboardTile::factory()->make()->toArray();
 
     post(route('dashboard-tiles.store'), $dashboardTileData)
-        ->assertRedirect(route('login'));
+        ->assertRedirect(route('sessions.create'));
 });
 
 it('can create a dashboard_tile', function () {
