@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\DashboardTile;
 use Illuminate\View\View;
 
-/*
- * Controller responsible for managing dashboard tiles in the application.
+/**
+ * Controller responsible for managing dashboards.
  */
-
 class DashboardController extends Controller
 {
     /**

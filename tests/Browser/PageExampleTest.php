@@ -9,7 +9,7 @@ use Tests\DuskTestCase;
 class PageExampleTest extends DuskTestCase
 {
     use DatabaseMigrations;
-    
+
     /* @test */
     public function register_new_user()
     {
@@ -22,7 +22,7 @@ class PageExampleTest extends DuskTestCase
                 ->screenshot('register')
                 ->press('Register')
                 ->assertAuthenticated()
-                ->assertRouteIs('dashboard.index');
+                ->assertRouteIs('dashboards.index');
         });
     }
 }

@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard.index');
+        ->name('dashboards.index');
     Route::get('/dashboard/{dashboardTileId}', [DashboardController::class, 'show'])
-        ->name('dashboard.show');
+        ->name('dashboards.show');
 
     Route::get('/dashboard-tiles', [DashboardTileController::class, 'index'])
         ->name('dashboard-tiles.index');

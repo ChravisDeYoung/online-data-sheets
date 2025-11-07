@@ -42,7 +42,7 @@ class SessionController extends Controller
         session()->regenerate();
 
         return redirect()
-            ->route('dashboard.index')
+            ->route('dashboards.index')
             ->with([
                 'status' => 'success',
                 'message' => 'Welcome back!'
