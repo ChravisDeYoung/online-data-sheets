@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -28,14 +29,13 @@ class UserFactory extends Factory
     /**
      * Indicate that the model's email address should be unverified.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @param Carbon|null $date
+     * @return UserFactory
      */
-    public function unverified()
+    public function unverified(Carbon $date = null): self
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
+        return $this->state(fn(array $attributes) => [
+            'email_verified_at' => $date ?? Carbon::now(),
+        ]);
     }
 }

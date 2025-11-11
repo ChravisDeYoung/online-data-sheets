@@ -6,22 +6,38 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreFieldDataRequest extends FormRequest
 {
-    public function authorize()
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return true
+     */
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return string[] The validation rules.
+     */
+    public function rules(): array
     {
         return [
             'column' => 'required|integer|min:1',
             'fieldId' => 'required|integer|exists:fields,id',
-            'value' => 'nullable|string',
+            'value' => 'nullable|string|max:255',
             'pageDate' => 'required|date'
         ];
     }
 
-    public function mappedAttributes(array $otherAttributes = [])
+    /**
+     * Map the request attributes to the FieldData model attributes.
+     *
+     * @param array $otherAttributes
+     * @return array<string, string> The mapped attributes for creating or updating FieldData.
+     */
+    public function mappedAttributes(array $otherAttributes = []): array
     {
         $attributeMap = array_merge([
             'column' => 'column',

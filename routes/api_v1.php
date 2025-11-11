@@ -11,15 +11,5 @@ Route::get('/', function () {
     ], 200);
 });
 
-//
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-//
-//Route::get('/field-data', function () {
-//    return response()->json([
-//        'message' => 'Hello World',
-//    ], 200);
-//});
-
-Route::post('/field-data', [FieldDataController::class, 'store'])->name('api.v1.field-data.store');
+Route::post('/field-data', [FieldDataController::class, 'store'])
+    ->name('api.v1.field-data.store');

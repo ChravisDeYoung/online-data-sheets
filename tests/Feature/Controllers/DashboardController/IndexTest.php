@@ -17,15 +17,15 @@ it('returns the index view', function () {
 });
 
 it('loads dashboardTiles in order', function () {
-    DashboardTile::factory()->create(['title' => 'Tile 3', 'sort_order' => 3, 'parent_dashboard_tile_id' => null]);
-    DashboardTile::factory()->create(['title' => 'Tile 2', 'sort_order' => 2, 'parent_dashboard_tile_id' => null]);
-    $tile = DashboardTile::factory()->create(['title' => 'Tile 1', 'sort_order' => 1, 'parent_dashboard_tile_id' => null]);
-    DashboardTile::factory()->create(['title' => 'Tile 4', 'sort_order' => 4, 'parent_dashboard_tile_id' => $tile->id]);
+    $orphanTile1 = DashboardTile::factory()->create(['title' => 'Tile 3', 'sort_order' => 3, 'parent_dashboard_tile_id' => null]);
+    $orphanTile2 = DashboardTile::factory()->create(['title' => 'Tile 2', 'sort_order' => 2, 'parent_dashboard_tile_id' => null]);
+    $parentTile = DashboardTile::factory()->create(['title' => 'Tile 1', 'sort_order' => 1, 'parent_dashboard_tile_id' => null]);
+    $childTile = DashboardTile::factory()->create(['title' => 'Tile 4', 'sort_order' => 4, 'parent_dashboard_tile_id' => $parentTile->id]);
 
     actingAs(User::factory()->create())
         ->get(route('dashboards.index'))
         ->assertViewIs('dashboards.index')
         ->assertViewHas('dashboardTiles', fn($dashboardTiles) => $dashboardTiles->count() === 3)
-        ->assertSeeInOrder(['Tile 1', 'Tile 2', 'Tile 3'])
-        ->assertDontSee('Tile 4');
+        ->assertSeeInOrder([$parentTile->title, $orphanTile2->title, $orphanTile1->title])
+        ->assertDontSee($childTile->title);
 });
