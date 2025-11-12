@@ -2,7 +2,6 @@
 
 use App\Models\Field;
 use App\Models\FieldData;
-use Carbon\Carbon;
 use function Pest\Laravel\post;
 
 it('does not require authentication', function () {
@@ -38,7 +37,7 @@ it('updates existing field data', function () {
     ]);
 });
 
-it('creates new field data', function () {
+it('creates new field data and history', function () {
     $fieldData = FieldData::factory()->make();
 
     post(route('api.v1.field-data.store', [
@@ -54,6 +53,11 @@ it('creates new field data', function () {
 
     $this->assertDatabaseHas('field_data', [
         'value' => $fieldData->value,
+    ]);
+
+    $this->assertDatabaseHas('field_data_histories', [
+        'old_value' => null,
+        'new_value' => $fieldData->value,
     ]);
 });
 

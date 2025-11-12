@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class FieldData
@@ -41,6 +42,16 @@ class FieldData extends Model
     public function field(): BelongsTo
     {
         return $this->belongsTo(Field::class);
+    }
+
+    /**
+     * Get the field data histories.
+     *
+     * @return HasMany The field data.
+     */
+    public function fieldDataHistories(): HasMany
+    {
+        return $this->hasMany(FieldDataHistory::class);
     }
 
     /**

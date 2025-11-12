@@ -7,15 +7,15 @@
     <x-table.wrapper>
         <x-slot name="title">
             <div class="flex justify-between">
-                {{ $page->name }} - {{ $pageDate->format('Y-m-d') }}
+                {{ $page->name }} - {{ $pageDate->toDateString() }}
 
                 <div>
                     <x-form.button variant="secondary" class="mr-2"
-                                   href="{{ route('pages.show', [ $page->slug, 'date' => $pageDate->copy()->subDays()->format('Y-m-d') ]) }}">
+                                   href="{{ route('pages.show', [ $page->slug, 'date' => $pageDate->copy()->subDays()->toDateString() ]) }}">
                         Prev
                     </x-form.button>
                     <x-form.button variant="secondary"
-                                   href="{{ route('pages.show', [ $page->slug, 'date' => $pageDate->copy()->addDays()->format('Y-m-d') ]) }}">
+                                   href="{{ route('pages.show', [ $page->slug, 'date' => $pageDate->copy()->addDays()->toDateString() ]) }}">
                         Next
                     </x-form.button>
                 </div>
@@ -54,7 +54,7 @@
                         @for ($i = 1; $i <= $page->column_count; $i++)
                             <x-table.cell class="!py-1 !px-1 text-center">
                                 @if (in_array($i, $field->required_columns_array, false))
-                                    <x-data.input :field="$field" :column="$i" :date="$pageDate"/>
+                                    <x-data.input :field="$field" :column="$i" :date="$pageDate->toDateString()"/>
                                 @endif
                             </x-table.cell>
                         @endfor

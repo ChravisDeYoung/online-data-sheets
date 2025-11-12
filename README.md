@@ -24,7 +24,6 @@ This is a project to learn the new stack with php@7.4 and laravel@8
 
 - split the user profile page into an update password form and an update user form
 - better sort handling for fields on a page
-- create tests and a testing database (should use same kind of database)
 - `vpa make:resource User`: use resources in the api
 - email functionality and queueing (`php artisan queue:listen`)
 - Admin vs. User functionality
@@ -32,10 +31,15 @@ This is a project to learn the new stack with php@7.4 and laravel@8
 - custom laravel messages (`php artisan lang:publish`)
 - prevent n+1 issues
   - AppServiceProvider > boot() > Model::preventLazyLoading()
-- testing
 - timestamped deletions (only delete in the first few minutes)
 - policies
 - Laravel breeze has authentication
-- laravel dusk
+- laravel dusk testing
 - github actions
-- use carbon for dates
+- authenticate api routes with sanctum
+  - add user_id to the field_data_history
+- calculation fields
+- api sync with external systems
+- different page styles
+- field history
+- custom out of range handling

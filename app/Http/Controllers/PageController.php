@@ -75,7 +75,10 @@ class PageController extends Controller
                 $query->orderBy('subsection_sort_order')->orderBy('sort_order');
             },
             'fields.fieldData' => function ($query) use ($pageDate) {
-                $query->where('page_date', $pageDate);
+                $query->where('page_date', $pageDate->toDateString());
+            },
+            'fields.fieldData.fieldDataHistories' => function ($query) {
+                $query->orderBy('created_at', 'desc');
             }
         ]);
 

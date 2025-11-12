@@ -34,6 +34,11 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
         } else {
           inputElement.classList.remove('out-of-range');
         }
+
+        // make history icon visible
+        if (inputElement.parentElement.querySelector('svg').style.display === 'none') {
+          inputElement.parentElement.querySelector('svg').style.display = 'block';
+        }
       })
       .catch(error => {
         console.error('error', error);

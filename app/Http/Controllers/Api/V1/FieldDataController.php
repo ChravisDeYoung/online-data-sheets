@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\StoreFieldDataRequest;
 use App\Models\FieldData;
+use App\Models\FieldDataHistory;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -22,10 +23,24 @@ class FieldDataController extends Controller
     {
         $attributes = $request->mappedAttributes();
 
-        $fieldData = FieldData::updateOrCreate(
-            ['field_id' => $attributes['field_id'], 'column' => $attributes['column'], 'page_date' => $attributes['page_date']], // what we match on
-            ['value' => $attributes['value']]        // data to update or create
-        );
+        $fieldData = FieldData::firstOrNew([
+            'field_id' => $attributes['field_id'],
+            'column' => $attributes['column'],
+            'page_date' => $attributes['page_date']
+        ]);
+
+        $oldValue = $fieldData->exists ? $fieldData->value : null;
+
+        $fieldData->value = $attributes['value'];
+        $fieldData->save();
+
+        if ($oldValue !== $attributes['value']) {
+            FieldDataHistory::create([
+                'field_data_id' => $fieldData->id,
+                'old_value' => $oldValue,
+                'new_value' => $attributes['value'],
+            ]);
+        }
 
         return response()->json([
             'fieldData' => $fieldData->id,
