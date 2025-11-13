@@ -11,5 +11,7 @@ Route::get('/', function () {
     ], 200);
 });
 
-Route::post('/field-data', [FieldDataController::class, 'store'])
-    ->name('api.v1.field-data.store');
+Route::middleware('auth')->group(function () {
+    Route::post('/field-data', [FieldDataController::class, 'store'])
+        ->name('api.v1.field-data.store');
+});

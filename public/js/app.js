@@ -29472,12 +29472,14 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
     fetch('/api/v1/field-data', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
       },
       body: JSON.stringify(postData)
     }).then(function (response) {
       if (!response.ok) {
-        throw new Error("HTTP error! status: ".concat(response.status));
+        throw new Error("invalid status [".concat(response.status, "]"));
       }
       return response.json(); // parse JSON body
     }).then(function (data) {
@@ -29492,7 +29494,8 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
         inputElement.parentElement.querySelector('svg').style.display = 'block';
       }
     })["catch"](function (error) {
-      console.error('error', error);
+      console.error(error);
+      inputElement.value = '';
     });
   }
 };

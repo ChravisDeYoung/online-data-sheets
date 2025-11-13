@@ -18,14 +18,17 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
     fetch('/api/v1/field-data', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
       },
       body: JSON.stringify(postData)
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`invalid status [${response.status}]`);
         }
+
         return response.json(); // parse JSON body
       })
       .then(data => {
@@ -41,7 +44,9 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
         }
       })
       .catch(error => {
-        console.error('error', error);
+        console.error(error);
+
+        inputElement.value = '';
       });
   }
 }
