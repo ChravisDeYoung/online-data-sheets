@@ -17,7 +17,9 @@
     <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar"
             type="button"
             class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+
         <span class="sr-only">Open sidebar</span>
+
         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
              xmlns="http://www.w3.org/2000/svg">
             <path clip-rule="evenodd" fill-rule="evenodd"
@@ -32,9 +34,10 @@
             class="h-full px-3 py-4 overflow-y-auto bg-white shadow dark:border dark:bg-gray-800 dark:border-gray-700">
             <ul class="space-y-2 font-medium">
                 <li>
-                    <a href="/dashboard"
+                    <a href="{{ route('dashboards.index') }}"
                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <x-icon name="dashboard"/>
+                        <x-sidebar-icon name="dashboard"/>
+
                         <span class="ms-3">Dashboard</span>
                     </a>
                 </li>
@@ -42,57 +45,72 @@
                 <li>
                     <a href="/inbox"
                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <x-icon name="inbox"/>
+                        <x-sidebar-icon name="inbox"/>
+
                         <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
+
                         <span
                             class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="/users"
-                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <x-icon name="users"/>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
-                    </a>
-                </li>
+                    <button type="button"
+                            class="flex items-center w-full justify-between p-2 text-gray-900 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                            aria-controls="admin-dropdown" data-collapse-toggle="admin-dropdown">
+                        <x-sidebar-icon name="admin"/>
 
-                <li>
-                    <a href="/fields"
-                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <x-icon name="fields"/>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Fields</span>
-                    </a>
-                </li>
+                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Admin</span>
 
-                <li>
-                    <a href="/pages"
-                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <x-icon name="pages"/>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Pages</span>
-                    </a>
-                </li>
+                        <x-sidebar-icon name="dropdown"/>
+                    </button>
 
-                <li>
-                    <a href="/dashboard-tiles"
-                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <x-icon name="dashboard-tiles"/>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Dashboard Tiles</span>
-                    </a>
+                    <ul id="admin-dropdown" class="hidden py-2 pl-6 space-y-2">
+                        <li>
+                            <a href="{{ route('users.index') }}"
+                               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <x-sidebar-icon name="users"/>
+
+                                <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('fields.index') }}"
+                               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <x-sidebar-icon name="fields"/>
+
+                                <span class="flex-1 ms-3 whitespace-nowrap">Fields</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('pages.index') }}"
+                               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <x-sidebar-icon name="pages"/>
+
+                                <span class="flex-1 ms-3 whitespace-nowrap">Pages</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('dashboard-tiles.index') }}"
+                               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <x-sidebar-icon name="dashboard-tiles"/>
+
+                                <span class="flex-1 ms-3 whitespace-nowrap">Dashboard Tiles</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
                     <form id="logout-form" method="POST" action="/logout">
                         @csrf
                         <button type="submit"
-                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <svg
-                                class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
-                            </svg>
+                                class="flex items-center text-start w-full p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <x-sidebar-icon name="logout"/>
+
                             <span class="flex-1 ms-3 whitespace-nowrap">Log Out</span>
                         </button>
                     </form>
