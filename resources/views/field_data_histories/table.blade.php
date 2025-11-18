@@ -4,7 +4,7 @@
             <x-table.row>
                 <x-table.cell>{{ $fieldDataHistory->new_value }}</x-table.cell>
                 <x-table.cell>{{ $fieldDataHistory->created_at }}</x-table.cell>
-                <x-table.cell>{{ $fieldDataHistory->id }} John Doe</x-table.cell>
+                <x-table.cell>{{ $fieldDataHistory->user->full_name }}</x-table.cell>
             </x-table.row>
         @endforeach
     </x-table.table>

@@ -29,6 +29,7 @@ class FieldDataController extends Controller
         return view('field_data_histories.table', [
             'field' => $fieldData->field,
             'fieldDataHistories' => $fieldData->fieldDataHistories()
+                ->with('user')
                 ->orderBy('created_at', 'desc')
                 ->paginate(10)
         ]);

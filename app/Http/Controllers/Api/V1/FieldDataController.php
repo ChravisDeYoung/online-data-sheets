@@ -39,6 +39,7 @@ class FieldDataController extends Controller
                 'field_data_id' => $fieldData->id,
                 'old_value' => $oldValue,
                 'new_value' => $attributes['value'],
+                'user_id' => $request->user()->id,
             ]);
         }
 

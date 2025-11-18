@@ -18,7 +18,7 @@ class CreateFieldDataHistoriesTable extends Migration
             $table->foreignId('field_data_id')->constrained('field_data')->restrictOnDelete();
             $table->string('old_value')->nullable();
             $table->string('new_value')->nullable();
-//            $table->foreignId('user_id')->constrained()->restrictOnDelete();
+            $table->foreignId('user_id')->constrained()->restrictOnDelete();
             $table->timestamps();
         });
     }
