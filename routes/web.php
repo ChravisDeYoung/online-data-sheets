@@ -4,6 +4,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardTileController;
 use App\Http\Controllers\FieldController;
+use App\Http\Controllers\FieldDataController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SessionController;
@@ -83,6 +84,9 @@ Route::middleware('auth')->group(function () {
         ->name('pages.edit');
     Route::patch('pages/{page}', [PageController::class, 'update'])
         ->name('pages.update');
+
+    Route::get('field-data/history', [FieldDataController::class, 'history'])
+        ->name('field-data.history');
 });
 
 //Route::post('/register', function () {

@@ -63,4 +63,6 @@
             @endforeach
         </x-table.table>
     </x-table.wrapper>
+
+    <x-modal modal-id="field-data-history-modal" title="Field Data History"/>
 </x-layout>

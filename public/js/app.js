@@ -29458,6 +29458,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flowbite__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flowbite */ "./node_modules/flowbite/lib/esm/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+window.getFieldDataHistory = function (fieldId, date, column, modalId) {
+  if (!fieldId || !date || !column) {
+    return;
+  }
+  fetch("/field-data/history?field_id=".concat(fieldId, "&page_date=").concat(date, "&column=").concat(column), {
+    method: 'GET',
+    headers: {
+      'Accept': 'text/html'
+    }
+  }).then(function (response) {
+    if (!response.ok) {
+      throw new Error("invalid status [".concat(response.status, "]"));
+    }
+    return response.text();
+  }).then(function (html) {
+    document.getElementById(modalId).innerHTML = html;
+  })["catch"](function (error) {
+    console.error(error);
+  });
+};
 window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
   var postData = {
     column: column,
@@ -29479,6 +29499,7 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
       body: JSON.stringify(postData)
     }).then(function (response) {
       if (!response.ok) {
+        inputElement.value = '';
         throw new Error("invalid status [".concat(response.status, "]"));
       }
       return response.json(); // parse JSON body
@@ -29490,12 +29511,12 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
       }
 
       // make history icon visible
-      if (inputElement.parentElement.querySelector('svg').style.display === 'none') {
-        inputElement.parentElement.querySelector('svg').style.display = 'block';
+      var inputHistoryBtn = inputElement.parentElement.querySelector('button[data-modal-toggle="field-data-history-modal"]');
+      if (inputHistoryBtn && inputHistoryBtn.style.display === 'none') {
+        inputHistoryBtn.style.display = 'block';
       }
     })["catch"](function (error) {
       console.error(error);
-      inputElement.value = '';
     });
   }
 };

@@ -5,85 +5,32 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Api\V1\StoreFieldDataRequest;
 use App\Http\Requests\UpdateFieldDataRequest;
 use App\Models\FieldData;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 /**
- * Controller responsible for storing field data.
+ * Controller responsible for field data history.
  */
 class FieldDataController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display history of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function history(Request $request)
     {
-        //
-    }
+        $fieldData = FieldData::firstOrNew([
+            'field_id' => $request->input('field_id'),
+            'page_date' => $request->input('page_date'),
+            'column' => $request->input('column')
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\Api\V1\StoreFieldDataRequest $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreFieldDataRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\FieldData $fieldData
-     * @return \Illuminate\Http\Response
-     */
-    public function show(FieldData $fieldData)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\FieldData $fieldData
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(FieldData $fieldData)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateFieldDataRequest $request
-     * @param \App\Models\FieldData $fieldData
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateFieldDataRequest $request, FieldData $fieldData)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\FieldData $fieldData
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(FieldData $fieldData)
-    {
-        //
+        return view('field_data_histories.table', [
+            'field' => $fieldData->field,
+            'fieldDataHistories' => $fieldData->fieldDataHistories()
+                ->orderBy('created_at', 'desc')
+                ->paginate(10)
+        ]);
     }
 }

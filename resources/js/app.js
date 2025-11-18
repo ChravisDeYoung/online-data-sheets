@@ -2,6 +2,32 @@ require('./bootstrap');
 
 import 'flowbite';
 
+window.getFieldDataHistory = function (fieldId, date, column, modalId) {
+  if (!fieldId || !date || !column) {
+    return;
+  }
+
+  fetch(`/field-data/history?field_id=${fieldId}&page_date=${date}&column=${column}`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'text/html',
+    },
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`invalid status [${response.status}]`);
+      }
+
+      return response.text();
+    })
+    .then(html => {
+      document.getElementById(modalId).innerHTML = html;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
 window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
   const postData = {
     column,
@@ -26,6 +52,7 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
     })
       .then(response => {
         if (!response.ok) {
+          inputElement.value = '';
           throw new Error(`invalid status [${response.status}]`);
         }
 
@@ -39,14 +66,13 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
         }
 
         // make history icon visible
-        if (inputElement.parentElement.querySelector('svg').style.display === 'none') {
-          inputElement.parentElement.querySelector('svg').style.display = 'block';
+        const inputHistoryBtn = inputElement.parentElement.querySelector('button[data-modal-toggle="field-data-history-modal"]');
+        if (inputHistoryBtn && inputHistoryBtn.style.display === 'none') {
+          inputHistoryBtn.style.display = 'block';
         }
       })
       .catch(error => {
         console.error(error);
-
-        inputElement.value = '';
       });
   }
 }
