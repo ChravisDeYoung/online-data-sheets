@@ -29509,11 +29509,12 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
       } else {
         inputElement.classList.remove('out-of-range');
       }
-
-      // make history icon visible
-      var inputHistoryBtn = inputElement.parentElement.querySelector('button[data-modal-toggle="field-data-history-modal"]');
-      if (inputHistoryBtn && inputHistoryBtn.style.display === 'none') {
-        inputHistoryBtn.style.display = 'block';
+      if (data.createdHistory) {
+        // make history icon visible
+        var inputHistoryBtn = inputElement.parentElement.querySelector('button[data-modal-toggle="field-data-history-modal"]');
+        if (inputHistoryBtn && inputHistoryBtn.style.display === 'none') {
+          inputHistoryBtn.style.display = 'block';
+        }
       }
     })["catch"](function (error) {
       console.error(error);

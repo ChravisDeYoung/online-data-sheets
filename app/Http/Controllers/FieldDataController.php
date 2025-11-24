@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Api\V1\StoreFieldDataRequest;
-use App\Http\Requests\UpdateFieldDataRequest;
 use App\Models\FieldData;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -16,9 +14,10 @@ class FieldDataController extends Controller
     /**
      * Display history of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return View
      */
-    public function history(Request $request)
+    public function history(Request $request): View
     {
         $fieldData = FieldData::firstOrNew([
             'field_id' => $request->input('field_id'),

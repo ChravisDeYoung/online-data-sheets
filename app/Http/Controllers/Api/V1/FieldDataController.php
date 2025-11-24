@@ -34,6 +34,7 @@ class FieldDataController extends Controller
         $fieldData->value = $attributes['value'];
         $fieldData->save();
 
+        $historyCreated = false;
         if ($oldValue !== $attributes['value']) {
             FieldDataHistory::create([
                 'field_data_id' => $fieldData->id,
@@ -41,6 +42,8 @@ class FieldDataController extends Controller
                 'new_value' => $attributes['value'],
                 'user_id' => $request->user()->id,
             ]);
+
+            $historyCreated = true;
         }
 
         return response()->json([
@@ -49,6 +52,7 @@ class FieldDataController extends Controller
                 ? 'Field data created successfully.'
                 : 'Field data updated successfully.',
             'isOutOfRange' => $fieldData->is_out_of_range,
+            'createdHistory' => $historyCreated
         ], $fieldData->wasRecentlyCreated ? 201 : 200);
     }
 }
