@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -55,6 +56,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    #region Accessors
+
     /**
      * Get the user's full name.
      *
@@ -64,7 +67,9 @@ class User extends Authenticatable
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+    #endregion
 
+    #region Mutators
     /**
      * Set the user's password.
      *
@@ -75,7 +80,9 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+    #endregion
 
+    #region Query Scopes
     /**
      * Search for users.
      *
@@ -91,4 +98,17 @@ class User extends Authenticatable
                 ->orWhere('email', 'like', '%' . $search . '%');
         });
     }
+    #endregion
+
+    #region Relationships
+    /**
+     * Get the roles.
+     *
+     * @return BelongsToMany The roles.
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+    #endregion
 }

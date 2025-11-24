@@ -51,7 +51,7 @@ class FieldFactory extends Factory
             'minimum' => $minimum,
             'maximum' => $maximum,
             'select_options' => $selectOptions,
-            'required_columns' => implode(',', $this->faker->randomElements(['1', '2', '3', '4', '5'])),
+            'required_columns' => implode(',', $this->faker->randomElements(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'])),
         ];
     }
 }
