@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
         ->name('dashboards.show');
 
     Route::get('pages/{page:slug}', [PageController::class, 'show'])
-        ->middleware('role:{page:slug}')
+        ->middleware('role:admin,{page:slug}')
         ->name('pages.show');
 
     Route::post('logout', [SessionController::class, 'destroy'])

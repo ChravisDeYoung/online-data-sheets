@@ -14,13 +14,11 @@ class EnsureUserHasRole
      *
      * @param Request $request
      * @param Closure(Request): (Response|RedirectResponse) $next
-     * @param $roles
+     * @param string[] $passedRoles
      * @return Response|RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $commaSeparatedRoles)
+    public function handle(Request $request, Closure $next, string ...$passedRoles)
     {
-        $passedRoles = explode(',', $commaSeparatedRoles);
-
         $roles = array_map(function ($role) use ($request) {
             // check if route model binding
             if (str_contains($role, '{') && str_contains($role, '}')) {
@@ -29,15 +27,14 @@ class EnsureUserHasRole
                 // check if route model binding specifies a column
                 if (count($routeModelBindingArguments) === 2) {
                     return $request->route($routeModelBindingArguments[0])[$routeModelBindingArguments[1]];
-                } else {
-                    return $request->route($routeModelBindingArguments[0])['id'];
                 }
 
+                return $request->route($routeModelBindingArguments[0])['id'];
             }
 
             return $role;
         }, $passedRoles);
-        
+
         $user = $request->user();
 
         if (!$user || !$user->hasAnyRole($roles)) {
