@@ -111,4 +111,19 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
     #endregion
+
+    #region Methods
+    /**
+     * Check if the user has any of the given roles.
+     *
+     * @param array $roles The roles to check.
+     * @return bool True if the user has any of the given roles, false otherwise.
+     */
+    public function hasAnyRole(array $roles): bool
+    {
+        $intersect = array_intersect($roles, $this->roles()->pluck('name')->toArray());
+
+        return !empty($intersect);
+    }
+    #endregion
 }

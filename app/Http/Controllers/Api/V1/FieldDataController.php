@@ -52,7 +52,7 @@ class FieldDataController extends Controller
                 ? 'Field data created successfully.'
                 : 'Field data updated successfully.',
             'isOutOfRange' => $fieldData->is_out_of_range,
-            'createdHistory' => $historyCreated
+            'createdHistory' => $request->user()->hasAnyRole(['admin']) && $historyCreated // only admin can see history
         ], $fieldData->wasRecentlyCreated ? 201 : 200);
     }
 }

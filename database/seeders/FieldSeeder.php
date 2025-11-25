@@ -27,12 +27,13 @@ class FieldSeeder extends Seeder
             $countToSelect = random_int(1, $page->column_count);
             $selectedNumbers = Arr::random($allNumbers, $countToSelect);
 
-            Field::factory(random_int(5, 25))->create([
-                'subsection' => $subsections[$subsectionRand],
-                'subsection_sort_order' => $subsectionRand,
-                'page_id' => $page->id,
-                'required_columns' => implode(',', $selectedNumbers),
-            ]);
+            Field::factory(random_int(5, 25))
+                ->for($page)
+                ->create([
+                    'subsection' => $subsections[$subsectionRand],
+                    'subsection_sort_order' => $subsectionRand,
+                    'required_columns' => implode(',', $selectedNumbers),
+                ]);
         }
     }
 }

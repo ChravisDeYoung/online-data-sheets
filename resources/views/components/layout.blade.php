@@ -54,55 +54,57 @@
                     </a>
                 </li>
 
-                <li>
-                    <button type="button"
-                            class="flex items-center w-full justify-between p-2 text-gray-900 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                            aria-controls="admin-dropdown" data-collapse-toggle="admin-dropdown">
-                        <x-sidebar-icon name="admin"/>
+                @if (Auth::user()->hasAnyRole(['admin']))
+                    <li>
+                        <button type="button"
+                                class="flex items-center w-full justify-between p-2 text-gray-900 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                                aria-controls="admin-dropdown" data-collapse-toggle="admin-dropdown">
+                            <x-sidebar-icon name="admin"/>
 
-                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Admin</span>
+                            <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Admin</span>
 
-                        <x-sidebar-icon name="dropdown"/>
-                    </button>
+                            <x-sidebar-icon name="dropdown"/>
+                        </button>
 
-                    <ul id="admin-dropdown" class="hidden py-2 pl-6 space-y-2">
-                        <li>
-                            <a href="{{ route('users.index') }}"
-                               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <x-sidebar-icon name="users"/>
+                        <ul id="admin-dropdown" class="hidden py-2 pl-6 space-y-2">
+                            <li>
+                                <a href="{{ route('users.index') }}"
+                                   class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <x-sidebar-icon name="users"/>
 
-                                <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
-                            </a>
-                        </li>
+                                    <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="{{ route('fields.index') }}"
-                               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <x-sidebar-icon name="fields"/>
+                            <li>
+                                <a href="{{ route('fields.index') }}"
+                                   class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <x-sidebar-icon name="fields"/>
 
-                                <span class="flex-1 ms-3 whitespace-nowrap">Fields</span>
-                            </a>
-                        </li>
+                                    <span class="flex-1 ms-3 whitespace-nowrap">Fields</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="{{ route('pages.index') }}"
-                               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <x-sidebar-icon name="pages"/>
+                            <li>
+                                <a href="{{ route('pages.index') }}"
+                                   class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <x-sidebar-icon name="pages"/>
 
-                                <span class="flex-1 ms-3 whitespace-nowrap">Pages</span>
-                            </a>
-                        </li>
+                                    <span class="flex-1 ms-3 whitespace-nowrap">Pages</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="{{ route('dashboard-tiles.index') }}"
-                               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <x-sidebar-icon name="dashboard-tiles"/>
+                            <li>
+                                <a href="{{ route('dashboard-tiles.index') }}"
+                                   class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <x-sidebar-icon name="dashboard-tiles"/>
 
-                                <span class="flex-1 ms-3 whitespace-nowrap">Dashboard Tiles</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                                    <span class="flex-1 ms-3 whitespace-nowrap">Dashboard Tiles</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
                 <li>
                     <form id="logout-form" method="POST" action="/logout">

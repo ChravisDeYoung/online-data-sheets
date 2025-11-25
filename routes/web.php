@@ -10,83 +10,76 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboards.index');
+    Route::get('/dashboard/{dashboardTileId}', [DashboardController::class, 'show'])
+        ->name('dashboards.show');
+
+    Route::get('pages/{page:slug}', [PageController::class, 'show'])
+        ->middleware('role:{page:slug}')
+        ->name('pages.show');
+
+    Route::post('logout', [SessionController::class, 'destroy'])
+        ->name('sessions.destroy');
+
+    Route::middleware('role:admin')->group(function () {
+        Route::get('companies', [CompanyController::class, 'index']);
+
+        Route::get('/dashboard-tiles/create', [DashboardTileController::class, 'create'])
+            ->name('dashboard-tiles.create');
+        Route::get('/dashboard-tiles/{dashboardTile}/edit', [DashboardTileController::class, 'edit'])
+            ->name('dashboard-tiles.edit');
+        Route::get('/dashboard-tiles', [DashboardTileController::class, 'index'])
+            ->name('dashboard-tiles.index');
+        Route::post('/dashboard-tiles', [DashboardTileController::class, 'store'])
+            ->name('dashboard-tiles.store');
+        Route::patch('/dashboard-tiles/{dashboardTile}', [DashboardTileController::class, 'update'])
+            ->name('dashboard-tiles.update');
+
+        Route::get('fields/create', [FieldController::class, 'create'])
+            ->name('fields.create');
+        Route::get('fields/{field}/edit', [FieldController::class, 'edit'])
+            ->name('fields.edit');
+        Route::get('fields', [FieldController::class, 'index'])
+            ->name('fields.index');
+        Route::post('fields', [FieldController::class, 'store'])
+            ->name('fields.store');
+        Route::patch('fields/{field}', [FieldController::class, 'update'])
+            ->name('fields.update');
+
+        Route::get('field-data/history', [FieldDataController::class, 'history'])
+            ->name('field-data.history');
+
+        Route::get('pages/create', [PageController::class, 'create'])
+            ->name('pages.create');
+        Route::get('pages/{page}/edit', [PageController::class, 'edit'])
+            ->name('pages.edit');
+        Route::get('pages', [PageController::class, 'index'])
+            ->name('pages.index');
+        Route::post('pages', [PageController::class, 'store'])
+            ->name('pages.store');
+        Route::patch('pages/{page}', [PageController::class, 'update'])
+            ->name('pages.update');
+
+        Route::get('users/create', [UserController::class, 'create'])
+            ->name('users.create');
+        Route::get('users/{user}/edit', [UserController::class, 'edit'])
+            ->name('users.edit');
+        Route::get('users', [UserController::class, 'index'])
+            ->name('users.index');
+        Route::post('users', [UserController::class, 'store'])
+            ->name('users.store');
+        Route::patch('users/{user}', [UserController::class, 'update'])
+            ->name('users.update');
+    });
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [SessionController::class, 'create'])
         ->name('sessions.create');
     Route::post('/login', [SessionController::class, 'store'])
         ->name('sessions.store');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::post('logout', [SessionController::class, 'destroy'])
-        ->name('sessions.destroy');
-
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboards.index');
-    Route::get('/dashboard/{dashboardTileId}', [DashboardController::class, 'show'])
-        ->name('dashboards.show');
-
-    Route::get('/dashboard-tiles', [DashboardTileController::class, 'index'])
-        ->name('dashboard-tiles.index');
-    Route::get('/dashboard-tiles/create', [DashboardTileController::class, 'create'])
-        ->name('dashboard-tiles.create');
-    Route::post('/dashboard-tiles', [DashboardTileController::class, 'store'])
-        ->name('dashboard-tiles.store');
-    Route::get('/dashboard-tiles/{dashboardTile}/edit', [DashboardTileController::class, 'edit'])
-        ->name('dashboard-tiles.edit');
-    Route::patch('/dashboard-tiles/{dashboardTile}', [DashboardTileController::class, 'update'])
-        ->name('dashboard-tiles.update');
-
-    Route::get('companies', [CompanyController::class, 'index']);
-
-    Route::get('users', [UserController::class, 'index'])
-        ->name('users.index');
-    Route::get('users/create', [UserController::class, 'create'])
-        ->name('users.create');
-    Route::post('users', [UserController::class, 'store'])
-        ->name('users.store');
-    Route::get('users/{user}/edit', [UserController::class, 'edit'])
-        ->name('users.edit');
-    Route::patch('users/{user}', [UserController::class, 'update'])
-        ->name('users.update');
-
-    Route::get('fields', [FieldController::class, 'index'])
-        ->name('fields.index');
-    Route::get('fields/create', [FieldController::class, 'create'])
-        ->name('fields.create');
-    Route::post('fields', [FieldController::class, 'store'])
-        ->name('fields.store');
-    Route::get('fields/{field}/edit', [FieldController::class, 'edit'])
-        ->name('fields.edit');
-    Route::patch('fields/{field}', [FieldController::class, 'update'])
-        ->name('fields.update');
-
-    Route::get('pages', [PageController::class, 'index'])
-        ->name('pages.index');
-    Route::get('pages/create', [PageController::class, 'create'])
-        ->name('pages.create');
-    Route::post('pages', [PageController::class, 'store'])
-        ->name('pages.store');
-    Route::get('pages/{page:slug}', [PageController::class, 'show'])
-        ->name('pages.show');
-    Route::get('pages/{page}/edit', [PageController::class, 'edit'])
-        ->name('pages.edit');
-    Route::patch('pages/{page}', [PageController::class, 'update'])
-        ->name('pages.update');
-
-    Route::get('field-data/history', [FieldDataController::class, 'history'])
-        ->name('field-data.history');
 });
 
 //Route::post('/register', function () {
