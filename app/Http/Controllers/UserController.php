@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -34,7 +35,10 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view('users.create');
+        return view('users.create', [
+            'roles' => Role::select('id', 'description')
+                ->get()
+        ]);
     }
 
     /**
@@ -46,12 +50,14 @@ class UserController extends Controller
     {
         $attributes = $this->validateUser();
 
-        User::create($attributes);
+        $user = User::create($attributes);
+        $user->roles()->attach(request('roles'));
 
-        return redirect(route('users.index'))->with([
-            'status' => 'success',
-            'message' => 'New user has been created.'
-        ]);
+        return redirect(route('users.index'))
+            ->with([
+                'status' => 'success',
+                'message' => 'New user has been created.'
+            ]);
     }
 
     /**
@@ -62,7 +68,11 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
-        return view('users.edit', ['user' => $user]);
+        return view('users.edit', [
+            'user' => $user->load('roles:id'),
+            'roles' => Role::select('id', 'description')
+                ->get()
+        ]);
     }
 
     /**
@@ -83,6 +93,7 @@ class UserController extends Controller
         }
 
         $user->update($validated);
+        $user->roles()->sync(request('roles'));
 
         return redirect()->route('users.index')->with([
             'status' => 'success',
@@ -110,6 +121,8 @@ class UserController extends Controller
             'phone_number' => 'required|max:255|phone:CA',
             'password' => ($passwordRequired ? 'required|string|min:7|max:255|confirmed' : 'nullable'),
             'password_confirmation' => ($passwordRequired ? 'required|string|min:7|max:255' : 'nullable'),
+            'roles' => 'required|array',
+            'roles.*' => 'required|integer|distinct|exists:roles,id'
         ]);
     }
 }

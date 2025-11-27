@@ -11,18 +11,6 @@ use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboards.index');
-    Route::get('/dashboard/{dashboardTileId}', [DashboardController::class, 'show'])
-        ->name('dashboards.show');
-
-    Route::get('pages/{page:slug}', [PageController::class, 'show'])
-        ->middleware('role:admin,{page:slug}')
-        ->name('pages.show');
-
-    Route::post('logout', [SessionController::class, 'destroy'])
-        ->name('sessions.destroy');
-
     Route::middleware('role:admin')->group(function () {
         Route::get('companies', [CompanyController::class, 'index']);
 
@@ -73,6 +61,18 @@ Route::middleware('auth')->group(function () {
         Route::patch('users/{user}', [UserController::class, 'update'])
             ->name('users.update');
     });
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboards.index');
+    Route::get('/dashboard/{dashboardTileId}', [DashboardController::class, 'show'])
+        ->name('dashboards.show');
+
+    Route::get('pages/{page:slug}', [PageController::class, 'show'])
+        ->middleware('role:admin,{page:slug}')
+        ->name('pages.show');
+
+    Route::post('logout', [SessionController::class, 'destroy'])
+        ->name('sessions.destroy');
 });
 
 Route::middleware('guest')->group(function () {
