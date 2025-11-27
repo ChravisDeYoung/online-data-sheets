@@ -107,7 +107,7 @@
                 @endif
 
                 <li>
-                    <form id="logout-form" method="POST" action="/logout">
+                    <form id="logout-form" method="POST" action="{{ route('sessions.destroy') }}">
                         @csrf
                         <button type="submit"
                                 class="flex items-center text-start w-full p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

@@ -13,7 +13,7 @@
                     Sign in to your account
                 </h1>
 
-                <form class="space-y-4 md:space-y-6" action="/login" method="POST">
+                <form class="space-y-4 md:space-y-6" action="{{ route('sessions.store') }}" method="POST">
                     @csrf
 
                     <x-form.input name="email" type="email" autocomplete="email" required/>

@@ -3,7 +3,7 @@
         <x-slot name="title">List of users</x-slot>
 
         <x-table.header>
-            <x-form.button :href="route(users.create)" class="inline-flex items-center">
+            <x-form.button :href="route('users.create')" class="inline-flex items-center">
                 <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path clip-rule="evenodd" fill-rule="evenodd"

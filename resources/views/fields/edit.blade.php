@@ -9,7 +9,7 @@
                 class=" text-blue-600 dark:text-blue-600">{{ $field->name }}</span>
         </x-slot>
 
-        <form action="/fields/{{ $field->id }}" method="POST">
+        <form action="{{ route('fields.update', $field) }}" method="POST">
             @csrf
             @method('PATCH')
 

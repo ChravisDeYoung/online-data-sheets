@@ -5,7 +5,7 @@
                 class=" text-blue-600 dark:text-blue-600">{{ $user->first_name }} {{ $user->last_name }}</span>
         </x-slot>
 
-        <form action="/users/{{ $user->id }}" method="POST">
+        <form action="{{ route('users.update', $user) }}" method="POST">
             @csrf
             @method('PATCH')
 

@@ -1,7 +1,7 @@
 <x-layout>
     <x-form.wrapper>
         <x-slot name="title">Add a new user</x-slot>
-        <form action="/users" method="POST">
+        <form action="{{ route('users.store') }}" method="POST">
             @csrf
 
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">

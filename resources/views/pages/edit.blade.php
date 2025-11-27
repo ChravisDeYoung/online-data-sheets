@@ -5,7 +5,7 @@
                 class=" text-blue-600 dark:text-blue-600">{{ $page->name }}</span>
         </x-slot>
 
-        <form action="{{ route('pages.update', $page->id) }}" method="POST">
+        <form action="{{ route('pages.update', $page) }}" method="POST">
             @csrf
             @method('PATCH')
 

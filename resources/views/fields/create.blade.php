@@ -1,7 +1,7 @@
 <x-layout>
     <x-form.wrapper>
         <x-slot name="title">Add a new field</x-slot>
-        <form action="/fields" method="POST">
+        <form action="{{ route('fields.store') }}" method="POST">
             @csrf
 
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -64,7 +64,7 @@
 
             <div class="mt-4 sm:mt-6 text-right">
                 <x-form.button :href="route('fields.index')" variant="secondary">Cancel</x-form.button>
-                
+
                 <x-form.button class="ml-2 sm:ml-3">Add field</x-form.button>
             </div>
         </form>
