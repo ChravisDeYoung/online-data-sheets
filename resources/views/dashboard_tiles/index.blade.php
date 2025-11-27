@@ -3,7 +3,7 @@
         <x-slot name="title">List of dashboard tiles</x-slot>
 
         <x-table.header>
-            <x-form.button href="/dashboard-tiles/create" class="inline-flex items-center">
+            <x-form.button :href="route('dashboard-tiles.create')" class="inline-flex items-center">
                 <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path clip-rule="evenodd" fill-rule="evenodd"
@@ -17,15 +17,17 @@
             @foreach($dashboardTiles as $tile)
                 <x-table.row :dropdown-id="'dashboard-tile-' . $tile->id . '-dropdown'">
                     <x-table.cell :header="true">{{ $tile->title }}</x-table.cell>
+
                     <x-table.cell>
                         @if ($tile->page)
-                            <a href="/pages/{{ $tile->page->slug }}"
+                            <a href="{{ route('pages.show', $tile->page) }}"
                                class="underline">{{ $tile->page->name }}</a>
                         @endif
                     </x-table.cell>
+
                     <x-table.cell>
                         @if ($tile->parentDashboardTile)
-                            <a href="/dashboard/{{ $tile->parentDashboardTile->id }}"
+                            <a href="{{ route('dashboards.show', $tile->parentDashboardTile) }}"
                                class="underline">{{ $tile->parentDashboardTile->title }} Dashboard</a>
                         @endif
                     </x-table.cell>
@@ -33,7 +35,7 @@
                     <x-slot name="actions">
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                             <li>
-                                <a href="/dashboard-tiles/{{ $tile->id }}/edit"
+                                <a href="{{ route('dashboard-tiles.edit', $tile) }}"
                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Edit
                                 </a>

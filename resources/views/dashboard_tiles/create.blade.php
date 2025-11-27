@@ -36,8 +36,8 @@
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">
-                <x-form.button href="{{ route('dashboard-tiles.index') }}" variant="secondary">Cancel
-                </x-form.button>
+                <x-form.button :href="route('dashboard-tiles.index')" variant="secondary">Cancel</x-form.button>
+                
                 <x-form.button class="ml-2 sm:ml-3">Add dashboard tile</x-form.button>
             </div>
         </form>

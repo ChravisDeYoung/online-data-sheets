@@ -8,11 +8,11 @@
 
                 <div>
                     <x-form.button variant="secondary" class="mr-2"
-                                   href="{{ route('pages.show', [ $page->slug, 'date' => $pageDate->copy()->subDays()->toDateString() ]) }}">
+                                   href="{{ route('pages.show', [ $page, 'date' => $pageDate->copy()->subDays()->toDateString() ]) }}">
                         Prev
                     </x-form.button>
                     <x-form.button variant="secondary"
-                                   href="{{ route('pages.show', [ $page->slug, 'date' => $pageDate->copy()->addDays()->toDateString() ]) }}">
+                                   href="{{ route('pages.show', [ $page, 'date' => $pageDate->copy()->addDays()->toDateString() ]) }}">
                         Next
                     </x-form.button>
                 </div>

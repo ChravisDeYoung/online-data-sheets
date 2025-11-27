@@ -63,8 +63,8 @@
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">
-                <x-form.button href="/fields" variant="secondary">Cancel
-                </x-form.button>
+                <x-form.button :href="route('fields.index')" variant="secondary">Cancel</x-form.button>
+                
                 <x-form.button class="ml-2 sm:ml-3">Add field</x-form.button>
             </div>
         </form>

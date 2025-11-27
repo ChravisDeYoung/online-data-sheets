@@ -17,15 +17,17 @@
             @foreach($pages as $page)
                 <x-table.row :dropdown-id="'page-' . $page->id . '-dropdown'">
                     <x-table.cell :header="true">{{ $page->name }}</x-table.cell>
+
                     <x-table.cell>
-                        <a href="/pages/{{ $page->slug }}" class="underline">/pages/{{ $page->slug }}</a>
+                        <a href="{{ route('pages.show', $page) }}" class="underline">/pages/{{ $page->slug }}</a>
                     </x-table.cell>
+
                     <x-table.cell>{{ $page->fields->count() }} field(s)</x-table.cell>
 
                     <x-slot name="actions">
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                             <li>
-                                <a href="/pages/{{ $page->id }}/edit"
+                                <a href="{{ route('pages.edit', $page) }}"
                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Edit
                                 </a>

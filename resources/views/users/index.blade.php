@@ -3,7 +3,7 @@
         <x-slot name="title">List of users</x-slot>
 
         <x-table.header>
-            <x-form.button href="/users/create" class="inline-flex items-center">
+            <x-form.button :href="route(users.create)" class="inline-flex items-center">
                 <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path clip-rule="evenodd" fill-rule="evenodd"
@@ -23,7 +23,7 @@
                     <x-slot name="actions">
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                             <li>
-                                <a href="/users/{{ $user->id }}/edit"
+                                <a href="{{ route('users.edit', $user) }}"
                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Edit
                                 </a>

@@ -48,8 +48,8 @@
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">
-                <x-form.button href="/users" variant="secondary">Cancel</x-form.button>
-                
+                <x-form.button :href="route('users.index')" variant="secondary">Cancel</x-form.button>
+
                 <x-form.button class="ml-2 sm:ml-3">Update user</x-form.button>
             </div>
         </form>
