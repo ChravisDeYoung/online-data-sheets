@@ -22,10 +22,11 @@ class DashboardTileController extends Controller
     public function index(): View
     {
         return view('dashboard_tiles.index', [
-            'dashboardTiles' => DashboardTile::orderBy('sort_order')
-                ->with('page')
-                ->with('parentDashboardTile')
+            'dashboardTiles' => DashboardTile::select('id', 'title', 'page_id', 'parent_dashboard_tile_id')
+                ->with('page:id,name,slug')
+                ->with('parentDashboardTile:id,title')
                 ->search(request('search'))
+                ->orderBy('sort_order')
                 ->paginate(10)
         ]);
     }
@@ -38,8 +39,11 @@ class DashboardTileController extends Controller
     public function create(): View
     {
         return view('dashboard_tiles.create', [
-            'pages' => Page::all(),
-            'dashboardTiles' => DashboardTile::whereNull('page_id')->get(),
+            'pages' => Page::select('id', 'name')
+                ->get(),
+            'dashboardTiles' => DashboardTile::select('id', 'title')
+                ->whereNull('page_id')
+                ->get(),
         ]);
     }
 
@@ -73,8 +77,10 @@ class DashboardTileController extends Controller
             'dashboardTile' => $dashboardTile,
             'pages' => $dashboardTile->childrenDashboardTiles()->exists()
                 ? collect([])
-                : Page::all(),
-            'dashboardTiles' => DashboardTile::whereNull('page_id')
+                : Page::select('id', 'name')
+                    ->get(),
+            'dashboardTiles' => DashboardTile::select('id', 'title')
+                ->whereNull('page_id')
                 ->where('id', '!=', $dashboardTile->id)
                 ->get(),
         ]);

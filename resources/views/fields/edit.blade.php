@@ -1,5 +1,5 @@
 @php
-    use App\Models\Field;$pages = \App\Models\Page::all();
+    use App\Models\Field;
 @endphp
 
 <x-layout>
@@ -35,7 +35,7 @@
                     <x-form.select name="type">
                         <option value="" disabled selected>Select a type</option>
 
-                        @foreach (Field::getTypes() as $typeValue => $typeName)
+                        @foreach ($fieldTypes as $typeValue => $typeName)
                             <option value="{{ $typeValue }}"
                                     @if(old('type', $field->type) == $typeValue) selected @endif>
                                 {{ ucfirst($typeName) }}

@@ -15,26 +15,30 @@
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="sort_order" type="number" :value="old('name', $dashboardTile->sort_order)"
+                    <x-form.input name="sort_order" type="number" :value="old('sort_order', $dashboardTile->sort_order)"
                                   required/>
                 </div>
 
                 <x-form.select name="page_id">
-                    <option value="" @if(old('page_id') == '') selected @endif>None</option>
+                    <option value="" @if(old('page_id', $dashboardTile->page_id) == '') selected @endif>None</option>
 
                     @foreach ($pages as $page)
-                        <option value="{{ $page->id }}" @if(old('page_id') == $page->id) selected @endif>
+                        <option value="{{ $page->id }}"
+                                @if(old('page_id', $dashboardTile->page_id) == $page->id) selected @endif>
                             {{ $page->name }}
                         </option>
                     @endforeach
                 </x-form.select>
 
                 <x-form.select name="parent_dashboard_tile_id">
-                    <option value="" @if(old('parent_dashboard_tile_id') == '') selected @endif>None</option>
+                    <option value=""
+                            @if(old('parent_dashboard_tile_id', $dashboardTile->parent_dashboard_tile_id) == '') selected @endif>
+                        None
+                    </option>
 
                     @foreach ($dashboardTiles as $tile)
                         <option value="{{ $tile->id }}"
-                                @if(old('parent_dashboard_tile_id') == $tile->id) selected @endif>
+                                @if(old('parent_dashboard_tile_id', $dashboardTile->parent_dashboard_tile_id) == $tile->id) selected @endif>
                             {{ $tile->title }}
                         </option>
                     @endforeach

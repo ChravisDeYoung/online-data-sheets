@@ -1,7 +1,4 @@
 @php use App\Models\Field; @endphp
-@php
-    $headers = array_merge(['Name'], array_map(fn($i) => "Round $i", range(1, $page->column_count)));
-@endphp
 
 <x-layout>
     <x-table.wrapper>

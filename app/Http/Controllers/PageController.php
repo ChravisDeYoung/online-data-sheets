@@ -21,8 +21,9 @@ class PageController extends Controller
     public function index(): View
     {
         return view('pages.index', [
-            'pages' => Page::search(request('search'))
-                ->with('fields')
+            'pages' => Page::select('id', 'name', 'slug')
+                ->with('fields:id,page_id')
+                ->search(request('search'))
                 ->orderBy('name')
                 ->paginate(10)
         ]);
@@ -72,17 +73,29 @@ class PageController extends Controller
 
         $page->load([
             'fields' => function ($query) {
-                $query->orderBy('subsection_sort_order')->orderBy('sort_order');
+                $query->select([
+                    'id',
+                    'page_id',
+                    'subsection',
+                    'name',
+                    'minimum',
+                    'maximum',
+                    'required_columns',
+                    'type',
+                    'select_options'
+                ])
+                    ->orderBy('subsection_sort_order')
+                    ->orderBy('sort_order');
             },
             'fields.fieldData' => function ($query) use ($pageDate) {
-                $query->where('page_date', $pageDate->toDateString());
+                $query->select('id', 'field_id', 'column', 'value')
+                    ->where('page_date', $pageDate->toDateString())
+                    ->withCount('fieldDataHistories');
             },
-            'fields.fieldData.fieldDataHistories' => function ($query) {
-                $query->orderBy('created_at', 'desc');
-            }
         ]);
 
         return view('pages.show', [
+            'headers' => array_merge(['Name'], array_map(fn($i) => "Round $i", range(1, $page->column_count))),
             'page' => $page,
             'pageDate' => $pageDate
         ]);

@@ -3,7 +3,6 @@
 
 @php
     $fieldData = $field->fieldData->firstWhere('column', $column);
-    $hasHistory = $fieldData && $fieldData->fieldDataHistories->isNotEmpty();
     $value = optional($fieldData)->value;
 @endphp
 
@@ -54,7 +53,7 @@
         <button data-modal-target="field-data-history-modal" data-modal-toggle="field-data-history-modal" type="button"
                 onclick="getFieldDataHistory({{ $field->id }}, '{{ $date }}', {{ $column }}, 'modal-body')"
                 class="absolute bottom-0 right-0 m-1"
-                style="display: {{ $hasHistory ? 'block' : 'none' }};">
+                style="display: {{ optional($fieldData)->field_data_histories_count > 0 ? 'block' : 'none' }};">
             <svg class="text-gray-900 dark:text-white h-2.5"
                  xmlns="http://www.w3.org/2000/svg"
                  viewBox="0 0 640 640"

@@ -20,7 +20,8 @@ class UserController extends Controller
     public function index(): View
     {
         return view('users.index', [
-            'users' => User::search(request('search'))
+            'users' => User::select('id', 'first_name', 'last_name', 'email', 'phone_number')
+                ->search(request('search'))
                 ->orderBy('id')
                 ->paginate(10)
         ]);

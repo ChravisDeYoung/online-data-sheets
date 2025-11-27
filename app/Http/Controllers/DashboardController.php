@@ -21,7 +21,9 @@ class DashboardController extends Controller
         $roles = Auth::user()->roles->pluck('name')->toArray();
 
         return view('dashboards.index', [
-            'dashboardTiles' => DashboardTile::where('parent_dashboard_tile_id', null)
+            'dashboardTiles' => DashboardTile::select('id', 'title', 'page_id')
+                ->with('page:id,slug')
+                ->where('parent_dashboard_tile_id', null)
                 ->whereHas('page', function ($query) use ($roles) {
                     if (!in_array('admin', $roles, true)) {
                         $query->whereIn('slug', $roles);
@@ -44,7 +46,9 @@ class DashboardController extends Controller
         $roles = Auth::user()->roles->pluck('name')->toArray();
 
         return view('dashboards.index', [
-            'dashboardTiles' => DashboardTile::where('parent_dashboard_tile_id', $dashboardTileId)
+            'dashboardTiles' => DashboardTile::select('id', 'title', 'page_id')
+                ->with('page:id,slug')
+                ->where('parent_dashboard_tile_id', $dashboardTileId)
                 ->where(function ($query) use ($roles) {
                     $query->whereHas('page', function ($query) use ($roles) {
                         if (!in_array('admin', $roles, true)) {

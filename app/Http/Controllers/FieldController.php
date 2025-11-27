@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Field;
+use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -20,7 +21,9 @@ class FieldController extends Controller
     public function index(): View
     {
         return view('fields.index', [
-            'fields' => Field::orderBy('subsection_sort_order')
+            'fields' => Field::select('id', 'name', 'type', 'subsection', 'page_id')
+                ->with('page:id,name')
+                ->orderBy('subsection_sort_order')
                 ->orderBy('sort_order')
                 ->search(request('search'))
                 ->paginate(10)]);
@@ -33,7 +36,10 @@ class FieldController extends Controller
      */
     public function create(): View
     {
-        return view('fields.create');
+        return view('fields.create', [
+            'fieldTypes' => Field::getTypes(),
+            'pages' => Page::select('id', 'name')->get()
+        ]);
     }
 
     /**
@@ -63,7 +69,11 @@ class FieldController extends Controller
      */
     public function edit(Field $field): View
     {
-        return view('fields.edit', ['field' => $field]);
+        return view('fields.edit', [
+            'field' => $field,
+            'fieldTypes' => Field::getTypes(),
+            'pages' => Page::select('id', 'name')->get()
+        ]);
     }
 
     /**

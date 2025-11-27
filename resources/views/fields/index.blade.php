@@ -32,18 +32,6 @@
                                 </a>
                             </li>
                         </ul>
-
-                        {{--                        <div class="py-1">--}}
-                        {{--                            <form action="{{ route('users.destroy', $field->id) }}" method="POST">--}}
-                        {{--                                @csrf--}}
-                        {{--                                @method('DELETE')--}}
-                        {{--                                --}}
-                        {{--                                <button type="submit"--}}
-                        {{--                                        class="block w-full text-left py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">--}}
-                        {{--                                    Delete--}}
-                        {{--                                </button>--}}
-                        {{--                            </form>--}}
-                        {{--                        </div>--}}
                     </x-slot>
                 </x-table.row>
             @endforeach

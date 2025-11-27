@@ -1,7 +1,3 @@
-@php
-    $pages = \App\Models\Page::all();
-@endphp
-
 <x-layout>
     <x-form.wrapper>
         <x-slot name="title">Add a new field</x-slot>
@@ -29,7 +25,7 @@
                     <x-form.select name="type">
                         <option value="" disabled selected>Select a type</option>
 
-                        @foreach (\App\Models\Field::getTypes() as $typeValue => $typeName)
+                        @foreach ($fieldTypes as $typeValue => $typeName)
                             <option value="{{ $typeValue }}" @if(old('type') == $typeValue) selected @endif>
                                 {{ ucfirst($typeName) }}
                             </option>
