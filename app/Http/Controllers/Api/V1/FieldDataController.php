@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\StoreFieldDataRequest;
 use App\Models\FieldData;
 use App\Models\FieldDataHistory;
+use App\Notifications\FieldDataOutOfRange;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -36,14 +37,20 @@ class FieldDataController extends Controller
 
         $historyCreated = false;
         if ($oldValue !== $attributes['value']) {
-            FieldDataHistory::create([
+            $user = $request->user();
+
+            $history = FieldDataHistory::create([
                 'field_data_id' => $fieldData->id,
                 'old_value' => $oldValue,
                 'new_value' => $attributes['value'],
-                'user_id' => $request->user()->id,
+                'user_id' => $user->id,
             ]);
 
             $historyCreated = true;
+
+            if ($fieldData->is_out_of_range) {
+                $user->notify(new FieldDataOutOfRange($fieldData));
+            }
         }
 
         return response()->json([
