@@ -8,6 +8,7 @@ use App\Models\FieldData;
 use App\Models\FieldDataHistory;
 use App\Notifications\FieldDataOutOfRange;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Notification;
 
 /**
  * Controller responsible for storing field data.
@@ -39,7 +40,7 @@ class FieldDataController extends Controller
         if ($oldValue !== $attributes['value']) {
             $user = $request->user();
 
-            $history = FieldDataHistory::create([
+            FieldDataHistory::create([
                 'field_data_id' => $fieldData->id,
                 'old_value' => $oldValue,
                 'new_value' => $attributes['value'],
@@ -49,7 +50,7 @@ class FieldDataController extends Controller
             $historyCreated = true;
 
             if ($fieldData->is_out_of_range) {
-                $user->notify(new FieldDataOutOfRange($fieldData));
+                Notification::send($fieldData->field->subscribers, new FieldDataOutOfRange($fieldData));
             }
         }
 

@@ -102,6 +102,16 @@ class User extends Authenticatable
 
     #region Relationships
     /**
+     * Get the fields that the user is subscribed to.
+     *
+     * @return BelongsToMany
+     */
+    public function fields(): BelongsToMany
+    {
+        return $this->belongsToMany(Field::class, 'field_subscriber', 'user_id', 'field_id');
+    }
+
+    /**
      * Get the roles.
      *
      * @return BelongsToMany The roles.

@@ -42,7 +42,15 @@
                     <div class="w-full">
                         <x-form.input :label="$role->description" name="roles[]" type="checkbox" error-Name="roles"
                                       value="{{ $role->id }}"
-                                      :checked="$user->roles->contains($role->id) || in_array($role->id, old('roles', []))"/>
+                                      :checked="$user->roles->contains($role->id) || in_array($role->id, old('roles', []), true)"/>
+                    </div>
+                @endforeach
+
+                <div class="text-xl font-bold text-gray-900 dark:text-white col-span-2">Out of Range Notifications</div>
+
+                @foreach ($user->fields as $field)
+                    <div class="w-full">
+                        <span class="text-gray-900 dark:text-white">{{ $field->page->name }} - {{ $field->subsection }} - {{ $field->name }}</span>
                     </div>
                 @endforeach
             </div>

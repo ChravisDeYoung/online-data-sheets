@@ -64,11 +64,9 @@ class FieldDataOutOfRange extends Notification
         $maximum = $this->fieldData->field->maximum ?? 'N/A';
         $userName = optional($latestHistory->user)->full_name ?? 'Unknown User';
 
-        $message = <<<EOT
-            User '$userName' entered value '{$this->fieldData->value}' for '{$this->fieldData->field->name}' on page
-            '{$this->fieldData->field->page->name} ({$this->fieldData->page_date})'. This is out of range
-            ($minimum-$maximum).
-            EOT;
+        $message = "User '$userName' entered value '{$this->fieldData->value}' for '{$this->fieldData->field->name}' on
+            page '{$this->fieldData->field->page->name} ({$this->fieldData->page_date})'. This is out of range
+            ($minimum-$maximum).";
 
         return [
             'field_data_id' => $this->fieldData->id,

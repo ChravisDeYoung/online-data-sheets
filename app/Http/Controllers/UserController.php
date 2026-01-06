@@ -86,10 +86,9 @@ class UserController extends Controller
     {
         $validated = $this->validateUser($user);
 
-        // Only update password if it was provided
+        // Only update the password if it was provided
         if (!$request->filled('password')) {
-            unset($validated['password']);
-            unset($validated['password_confirmation']);
+            unset($validated['password'], $validated['password_confirmation']);
         }
 
         $user->update($validated);

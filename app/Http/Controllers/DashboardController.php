@@ -43,6 +43,10 @@ class DashboardController extends Controller
      */
     public function show(int $dashboardTileId): View
     {
+        if (!DashboardTile::find($dashboardTileId)) {
+            abort(404, 'Dashboard tile not found.');
+        }
+
         $roles = Auth::user()->roles->pluck('name')->toArray();
 
         return view('dashboards.index', [

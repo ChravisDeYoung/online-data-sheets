@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::get('notfications', [NotificationController::class, 'index'])
             ->name('notifications.index');
         Route::get('notfications/{notification}', [NotificationController::class, 'show'])
+            ->missing(fn() => abort(404, 'Notification not found.'))
             ->name('notifications.show');
 
         Route::get('users/create', [UserController::class, 'create'])
@@ -68,6 +69,8 @@ Route::middleware('auth')->group(function () {
             ->name('users.update');
     });
 
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('dashboards.index');
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboards.index');
     Route::get('/dashboard/{dashboardTileId}', [DashboardController::class, 'show'])
@@ -75,6 +78,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('pages/{page:slug}', [PageController::class, 'show'])
         ->middleware('role:admin,{page:slug}')
+        ->missing(fn() => abort(404, 'Page not found.'))
         ->name('pages.show');
 
     Route::post('logout', [SessionController::class, 'destroy'])
@@ -86,6 +90,10 @@ Route::middleware('guest')->group(function () {
         ->name('sessions.create');
     Route::post('/login', [SessionController::class, 'store'])
         ->name('sessions.store');
+});
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
 });
 
 //Route::post('/register', function () {

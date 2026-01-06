@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
@@ -75,6 +76,42 @@ class Field extends Model
         ];
     }
 
+    #region Accessors
+
+    /**
+     * Get the required columns as an array.
+     *
+     * @return string[] The required columns as an array.
+     */
+    public function getRequiredColumnsArrayAttribute(): array
+    {
+        return $this->required_columns
+            ? explode(',', $this->required_columns)
+            : [];
+    }
+    #endregion
+
+    #region Query Scopes
+    /**
+     * Search for fields.
+     *
+     * @param $query
+     * @param $search
+     * @return void
+     */
+    public function scopeSearch($query, $search)
+    {
+        $query->when($search, function () use ($query, $search) {
+            return $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('subsection', 'like', '%' . $search . '%')
+                ->orWhereHas('page', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                });
+        });
+    }
+    #endregion
+
+    #region Relationships
     /**
      * Get the field data.
      *
@@ -96,32 +133,13 @@ class Field extends Model
     }
 
     /**
-     * Search for fields.
+     * Get the users subscribed to the field.
      *
-     * @param $query
-     * @param $search
-     * @return void
+     * @return BelongsToMany
      */
-    public function scopeSearch($query, $search)
+    public function subscribers(): BelongsToMany
     {
-        $query->when($search, function () use ($query, $search) {
-            return $query->where('name', 'like', '%' . $search . '%')
-                ->orWhere('subsection', 'like', '%' . $search . '%')
-                ->orWhereHas('page', function ($query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%');
-                });
-        });
+        return $this->belongsToMany(User::class, 'field_subscriber', 'field_id', 'user_id');
     }
-
-    /**
-     * Get the required columns as an array.
-     *
-     * @return string[] The required columns as an array.
-     */
-    public function getRequiredColumnsArrayAttribute(): array
-    {
-        return $this->required_columns
-            ? explode(',', $this->required_columns)
-            : [];
-    }
+    #endregion
 }
