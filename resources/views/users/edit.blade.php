@@ -28,14 +28,6 @@
                                   :value="old('phone_number', $user->phone_number)" required/>
                 </div>
 
-                <div class="w-full">
-                    <x-form.input name="password" type="password" autocomplete="new-password"/>
-                </div>
-
-                <div class="w-full">
-                    <x-form.input name="password_confirmation" type="password" autocomplete="new-password"/>
-                </div>
-
                 <div class="text-xl font-bold text-gray-900 dark:text-white col-span-2">Roles</div>
 
                 @foreach ($roles as $role)
@@ -48,17 +40,48 @@
 
                 <div class="text-xl font-bold text-gray-900 dark:text-white col-span-2">Out of Range Notifications</div>
 
-                @foreach ($user->fields as $field)
+                @forelse ($user->fields as $field)
                     <div class="w-full">
                         <span class="text-gray-900 dark:text-white">{{ $field->page->name }} - {{ $field->subsection }} - {{ $field->name }}</span>
                     </div>
-                @endforeach
+                @empty
+                    <div class="w-full">
+                        <span class="text-gray-900 dark:text-white">None</span>
+                    </div>
+                @endforelse
             </div>
 
             <div class="mt-4 sm:mt-6 text-right">
                 <x-form.button :href="route('users.index')" variant="secondary">Cancel</x-form.button>
 
                 <x-form.button class="ml-2 sm:ml-3">Update user</x-form.button>
+            </div>
+        </form>
+    </x-form.wrapper>
+
+    <x-form.wrapper>
+        <x-slot name="title">
+            Update password
+        </x-slot>
+
+        <form action="{{ route('users.update-password', $user) }}" method="POST">
+            @csrf
+            @method('PATCH')
+
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div class="w-full">
+                    <x-form.input name="password" type="password" autocomplete="new-password"/>
+                </div>
+
+                <div class="w-full">
+                    <x-form.input name="password_confirmation" type="password" autocomplete="new-password"/>
+                </div>
+            </div>
+
+            <div class="mt-4 sm:mt-6 text-right">
+                <x-form.button :href="route('users.index')" variant="secondary">Cancel</x-form.button>
+
+                <x-form.button class="ml-2 sm:ml-3">Update password</x-form.button>
             </div>
         </form>
     </x-form.wrapper>

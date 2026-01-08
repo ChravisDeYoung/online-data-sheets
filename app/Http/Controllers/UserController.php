@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -46,9 +48,9 @@ class UserController extends Controller
      *
      * @return RedirectResponse The redirect response after storing the user.
      */
-    public function store(): RedirectResponse
+    public function store(UserRequest $request): RedirectResponse
     {
-        $attributes = $this->validateUser();
+        $attributes = $request->validated();
 
         $user = User::create($attributes);
         $user->roles()->attach(request('roles'));
@@ -82,46 +84,31 @@ class UserController extends Controller
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(UserRequest $request, User $user): RedirectResponse
     {
-        $validated = $this->validateUser($user);
+        $attributes = $request->validated();
 
-        // Only update the password if it was provided
-        if (!$request->filled('password')) {
-            unset($validated['password'], $validated['password_confirmation']);
-        }
+        $user->update($attributes);
 
-        $user->update($validated);
         $user->roles()->sync(request('roles'));
 
-        return redirect()->route('users.index')->with([
+        return back()->with([
             'status' => 'success',
             'message' => 'User updated'
         ]);
     }
 
-    /**
-     * Validate the user data.
-     *
-     * @param User|null $user The user instance being validated, or null if a new instance is being created.
-     * @return array The validated data.
-     */
-    private function validateUser(?User $user = null): array
+    public function updatePassword(UpdatePasswordRequest $request, User $user): RedirectResponse
     {
-        $user ??= new User();
+        $attributes = $request->validated();
 
-        // only validate password if we're creating the user or they are choosing to update password
-        $passwordRequired = !$user->exists || request()->filled('password');
+        $user->update([
+            'password' => ($attributes['password'])
+        ]);
 
-        return request()->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => "required|email|max:255|unique:users,email,$user->id",
-            'phone_number' => 'required|max:255|phone:CA',
-            'password' => ($passwordRequired ? 'required|string|min:7|max:255|confirmed' : 'nullable'),
-            'password_confirmation' => ($passwordRequired ? 'required|string|min:7|max:255' : 'nullable'),
-            'roles' => 'required|array',
-            'roles.*' => 'required|integer|distinct|exists:roles,id'
+        return back()->with([
+            'status' => 'success',
+            'message' => 'Password updated'
         ]);
     }
 }

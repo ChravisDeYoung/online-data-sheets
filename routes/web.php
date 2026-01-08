@@ -67,6 +67,8 @@ Route::middleware('auth')->group(function () {
             ->name('users.store');
         Route::patch('users/{user}', [UserController::class, 'update'])
             ->name('users.update');
+        Route::patch('users/{user}/password', [UserController::class, 'updatePassword'])
+            ->name('users.update-password');
     });
 
     Route::get('/', [DashboardController::class, 'index'])

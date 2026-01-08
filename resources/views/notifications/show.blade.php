@@ -4,7 +4,11 @@
             Field Data Out of Range Notification
         </h2>
 
-        <div class="grid gap-4 sm:gap-6">
+        <div class="grid grid-col-1 gap-4 md:grid-cols-2 sm:gap-6">
+            <p class="block mb-2 text-sm font-medium text-gray-900 col-span-2 dark:text-white">
+                {{ $notification->data['message'] }}
+            </p>
+
             <p class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Date: <span
                     class="text-blue-600 dark:text-blue-600 font-bold">{{ $notification->data['page_date'] }}</span>
@@ -38,10 +42,6 @@
             <p class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Value: <span
                     class="text-blue-600 dark:text-blue-600 font-bold">{{ $notification->data['value'] }}</span>
-            </p>
-
-            <p class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                {{ $notification->data['message'] }}
             </p>
         </div>
     </section>
