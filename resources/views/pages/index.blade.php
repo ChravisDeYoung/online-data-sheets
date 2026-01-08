@@ -16,7 +16,7 @@
         <x-table.table :headers="['Name', 'Link', 'Field Count', '']">
             @foreach($pages as $page)
                 <x-table.row :dropdown-id="'page-' . $page->id . '-dropdown'">
-                    <x-table.cell :header="true">{{ $page->name }}</x-table.cell>
+                    <x-table.cell header>{{ $page->name }}</x-table.cell>
 
                     <x-table.cell>
                         <a href="{{ route('pages.show', $page) }}" class="underline">/pages/{{ $page->slug }}</a>

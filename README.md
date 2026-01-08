@@ -42,3 +42,4 @@ This is a project to learn the new stack with php@7.4 and laravel@8
 - custom subscriptions for fields and pages (ex. custom range or % out of range on a page)
 - support multiple organizations
   - timezones, logos, colours?
+- ability to assign users to fields and fields to users

@@ -16,7 +16,7 @@
         <x-table.table :headers="['Name', 'Email', 'Phone', '']">
             @foreach($users as $user)
                 <x-table.row :dropdown-id="'user-' . $user->id . '-dropdown'">
-                    <x-table.cell :header="true">{{ $user->first_name }} {{ $user->last_name }}</x-table.cell>
+                    <x-table.cell header>{{ $user->first_name }} {{ $user->last_name }}</x-table.cell>
                     <x-table.cell>{{ $user->email }}</x-table.cell>
                     <x-table.cell>{{ $user->phone_number }}</x-table.cell>
 

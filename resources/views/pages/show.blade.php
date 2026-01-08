@@ -26,7 +26,7 @@
                 @if ($currentSubsection !== $field->subsection)
                     @php $currentSubsection = $field->subsection; @endphp
                     <x-table.row class="bg-gray-200 dark:bg-gray-700">
-                        <x-table.cell :header="true" colspan="2" class="p-2 font-semibold text-xl">
+                        <x-table.cell header colspan="2" class="p-2 font-semibold text-xl">
                             {{ $currentSubsection ?? 'General' }}
                         </x-table.cell>
                     </x-table.row>

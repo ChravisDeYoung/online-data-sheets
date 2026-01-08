@@ -18,7 +18,7 @@
         <x-table.table :headers="['Name', 'Page', 'Subsection', 'Type', '']">
             @foreach($fields as $field)
                 <x-table.row :dropdown-id="'field-' . $field->id . '-dropdown'">
-                    <x-table.cell :header="true">{{ $field->name }}</x-table.cell>
+                    <x-table.cell header>{{ $field->name }}</x-table.cell>
                     <x-table.cell>{{ $field->page->name }}</x-table.cell>
                     <x-table.cell>{{ $field->subsection }}</x-table.cell>
                     <x-table.cell>{{ App\Models\Field::getTypes()[$field->type] }}</x-table.cell>

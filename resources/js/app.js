@@ -2,7 +2,7 @@ require('./bootstrap');
 
 import 'flowbite';
 
-window.getFieldDataHistory = function (fieldId, date, column, modalId) {
+globalThis.getFieldDataHistory = function (fieldId, date, column, modalId) {
   if (!fieldId || !date || !column) {
     return;
   }
@@ -28,7 +28,7 @@ window.getFieldDataHistory = function (fieldId, date, column, modalId) {
     });
 }
 
-window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
+globalThis.saveFieldData = function (inputElement, fieldId, column, pageDate) {
   const postData = {
     column,
     fieldId,
@@ -78,3 +78,4 @@ window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
       });
   }
 }
+

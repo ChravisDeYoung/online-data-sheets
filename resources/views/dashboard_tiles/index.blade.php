@@ -16,7 +16,7 @@
         <x-table.table :headers="['Title', 'Page Link', 'Parent Dashboard Link', '']">
             @foreach($dashboardTiles as $tile)
                 <x-table.row :dropdown-id="'dashboard-tile-' . $tile->id . '-dropdown'">
-                    <x-table.cell :header="true">{{ $tile->title }}</x-table.cell>
+                    <x-table.cell header>{{ $tile->title }}</x-table.cell>
 
                     <x-table.cell>
                         @if ($tile->page)
