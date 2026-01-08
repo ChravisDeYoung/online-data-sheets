@@ -29458,7 +29458,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flowbite__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flowbite */ "./node_modules/flowbite/lib/esm/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.getFieldDataHistory = function (fieldId, date, column, modalId) {
+globalThis.getFieldDataHistory = function (fieldId, date, column, modalId) {
   if (!fieldId || !date || !column) {
     return;
   }
@@ -29478,7 +29478,7 @@ window.getFieldDataHistory = function (fieldId, date, column, modalId) {
     console.error(error);
   });
 };
-window.saveFieldData = function (inputElement, fieldId, column, pageDate) {
+globalThis.saveFieldData = function (inputElement, fieldId, column, pageDate) {
   var postData = {
     column: column,
     fieldId: fieldId,
