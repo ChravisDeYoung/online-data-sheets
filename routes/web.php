@@ -51,9 +51,9 @@ Route::middleware('auth')->group(function () {
         Route::patch('pages/{page}', [PageController::class, 'update'])
             ->name('pages.update');
 
-        Route::get('notfications', [NotificationController::class, 'index'])
+        Route::get('notifications', [NotificationController::class, 'index'])
             ->name('notifications.index');
-        Route::get('notfications/{notification}', [NotificationController::class, 'show'])
+        Route::get('notifications/{notification}', [NotificationController::class, 'show'])
             ->missing(fn() => abort(404, 'Notification not found.'))
             ->name('notifications.show');
 

@@ -79,3 +79,44 @@ globalThis.saveFieldData = function (inputElement, fieldId, column, pageDate) {
   }
 }
 
+globalThis.moveField = function (inputElement, direction) {
+  const selectedRow = inputElement.closest('tr');
+
+  if (!selectedRow) {
+    console.error('unable to find field row');
+    return;
+  }
+
+  if (direction === 'up') {
+    const prevRow = selectedRow.previousElementSibling;
+
+    if (prevRow) prevRow.before(selectedRow);
+  } else if (direction === 'down') {
+    const nextRow = selectedRow.nextElementSibling;
+
+    if (nextRow) nextRow.after(selectedRow);
+  } else {
+    console.error('invalid direction');
+    return;
+  }
+
+  let fieldOrder = [];
+  for (const row of selectedRow.parentElement.children) {
+    const fieldId = row.getAttribute('field-id');
+    const parsedFieldId = Number(fieldId);
+
+    if (!Number.isNaN(parsedFieldId)) {
+      fieldOrder.push(parsedFieldId);
+    }
+
+
+    selectedRow === row
+      ? row.classList.add('bg-gray-50', 'dark:bg-gray-700')
+      : row.classList.remove('bg-gray-50', 'dark:bg-gray-700')
+  }
+
+  const fieldOrderInput = document.getElementById('field_order');
+  if (fieldOrderInput) {
+    fieldOrderInput.value = fieldOrder.join(',');
+  }
+}

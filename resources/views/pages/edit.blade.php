@@ -26,16 +26,20 @@
 
                 <div class="col-span-2">
                     <x-form.label name="Field Order"/>
+
+                    <input type="hidden" name="field_order" id="field_order">
+
                     <x-table.wrapper class="!p-0">
                         <x-table.table :headers="['Order', 'Subsection', 'Name', '']">
                             @foreach($page->fields as $field)
-                                <x-table.row>
+                                <x-table.row field-id="{{ $field->id }}">
                                     <x-table.cell>{{ $loop->iteration }}</x-table.cell>
                                     <x-table.cell>{{ $field->subsection }}</x-table.cell>
                                     <x-table.cell>{{ $field->name }}</x-table.cell>
                                     <x-table.cell class="flex justify-end">
                                         <button type="button"
-                                                class="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                class="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                                onclick="moveField(this, 'up')">
                                             <svg
                                                 class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 fill-current"
                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
@@ -46,7 +50,8 @@
                                         </button>
 
                                         <button type="button"
-                                                class="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                class="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                                onclick="moveField(this, 'down')">
                                             <svg
                                                 class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white fill-current"
                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">

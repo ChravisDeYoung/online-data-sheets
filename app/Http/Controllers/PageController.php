@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PageRequest;
 use App\Models\Page;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Throwable;
 
 /**
  * Controller responsible for managing pages in the application.
@@ -44,9 +47,9 @@ class PageController extends Controller
      *
      * @return RedirectResponse The redirect response after storing the page.
      */
-    public function store(): RedirectResponse
+    public function store(PageRequest $request): RedirectResponse
     {
-        $attributes = $this->validatePage();
+        $attributes = $request->validated();
 
         Page::create($attributes);
 
@@ -83,9 +86,7 @@ class PageController extends Controller
                     'required_columns',
                     'type',
                     'select_options'
-                ])
-                    ->orderBy('subsection_sort_order')
-                    ->orderBy('sort_order');
+                ]);
             },
             'fields.fieldData' => function ($query) use ($pageDate) {
                 $query->select('id', 'field_id', 'column', 'value')
@@ -117,12 +118,48 @@ class PageController extends Controller
      *
      * @param Page $page The page to be updated.
      * @return RedirectResponse The redirect response after updating the page.
+     * @throws \Throwable
      */
-    public function update(Page $page): RedirectResponse
+    public function update(PageRequest $request, Page $page): RedirectResponse
     {
-        $validated = $this->validatePage($page);
+        $attributes = $request->validated();
 
-        $page->update($validated);
+        try {
+            DB::transaction(function () use ($page, $attributes) {
+                $page->update($attributes);
+
+                $fieldOrder = $attributes['field_order'];
+                $fields = $page->fields()
+                    ->select(['id', 'subsection'])
+                    ->get()
+                    ->keyBy('id');
+
+                $currentSubsection = null;
+                $subsectionSortOrder = 0;
+                $sortOrder = 0;
+
+                foreach ($fieldOrder as $id) {
+                    if ($fields[$id]->subsection !== $currentSubsection) {
+                        $subsectionSortOrder++;
+                        $sortOrder = 1;
+                        $currentSubsection = $fields[$id]->subsection;
+                    } else {
+                        $sortOrder++;
+                    }
+
+                    // 2. Perform the individual update
+                    $fields[$id]->update([
+                        'subsection_sort_order' => $subsectionSortOrder,
+                        'sort_order' => $sortOrder,
+                    ]);
+                }
+            });
+        } catch (Throwable $e) {
+            return back()->with([
+                'status' => 'error',
+                'message' => 'Something went wrong'
+            ]);
+        }
 
         return redirect()
             ->route('pages.index')
@@ -130,22 +167,5 @@ class PageController extends Controller
                 'status' => 'success',
                 'message' => 'Page updated'
             ]);
-    }
-
-    /**
-     * Validate the request data for creating or updating a page.
-     *
-     * @param Page|null $page The page instance being validated, or null if a new instance is being created.
-     * @return array The validated data.
-     */
-    private function validatePage(?Page $page = null): array
-    {
-        $page ??= new Page();
-
-        return request()->validate([
-            'name' => 'required|string|max:255',
-            'slug' => "required|string|max:255|unique:pages,slug,$page->id",
-            'column_count' => 'required|integer|min:1|max:12',
-        ]);
     }
 }

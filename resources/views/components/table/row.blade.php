@@ -1,4 +1,4 @@
-<tr class="border-b dark:border-gray-700">
+<tr class="border-b dark:border-gray-700" {{ $attributes }}>
     {{ $slot }}
 
     @if(isset($actions))
