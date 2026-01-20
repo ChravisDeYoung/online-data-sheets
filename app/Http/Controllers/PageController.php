@@ -45,6 +45,7 @@ class PageController extends Controller
     /**
      * Store a newly created page in storage.
      *
+     * @param PageRequest $request The request object containing the page data.
      * @return RedirectResponse The redirect response after storing the page.
      */
     public function store(PageRequest $request): RedirectResponse
@@ -63,6 +64,7 @@ class PageController extends Controller
 
     /**
      * Display the specified page.
+     *
      * @param Page $page The page to be displayed.
      * @return View The view for displaying the page.
      */

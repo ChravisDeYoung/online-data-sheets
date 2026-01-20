@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FieldDataHistoryRequest;
 use App\Models\FieldData;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -14,15 +14,17 @@ class FieldDataController extends Controller
     /**
      * Display history of the resource.
      *
-     * @param Request $request
-     * @return View
+     * @param FieldDataHistoryRequest $request The request object containing the field data history parameters.
+     * @return View The view for displaying the field data history.
      */
-    public function history(Request $request): View
+    public function history(FieldDataHistoryRequest $request): View
     {
+        $attributes = $request->validated();
+
         $fieldData = FieldData::firstOrNew([
-            'field_id' => $request->input('field_id'),
-            'page_date' => $request->input('page_date'),
-            'column' => $request->input('column')
+            'field_id' => $attributes['field_id'],
+            'page_date' => $attributes['page_date'],
+            'column' => $attributes['column']
         ]);
 
         return view('field_data_histories.table', [

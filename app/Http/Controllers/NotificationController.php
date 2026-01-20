@@ -11,6 +11,11 @@ use Illuminate\View\View;
 
 class NotificationController extends Controller
 {
+    /**
+     * Display a listing of the notifications.
+     *
+     * @return View The view for displaying the notifications.
+     */
     public function index(): View
     {
         return view('notifications.index', [
@@ -20,6 +25,12 @@ class NotificationController extends Controller
         ]);
     }
 
+    /**
+     * Display a single notification.
+     *
+     * @param DatabaseNotification $notification The notification to be displayed.
+     * @return View The view for displaying a single notification.
+     */
     public function show(DatabaseNotification $notification): View
     {
         $notification->markAsRead();

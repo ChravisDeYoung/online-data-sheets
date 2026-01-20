@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DashboardTileRequest;
 use App\Models\DashboardTile;
 use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 /**
@@ -50,13 +50,12 @@ class DashboardTileController extends Controller
     /**
      * Store a newly created dashboard tile in storage.
      *
+     * @param DashboardTileRequest $request The request object containing the dashboard tile data.
      * @return RedirectResponse The redirect response after storing the dashboard tile.
      */
-    public function store(): RedirectResponse
+    public function store(DashboardTileRequest $request): RedirectResponse
     {
-        $attributes = $this->validateDashboardTile();
-
-        DashboardTile::create($attributes);
+        DashboardTile::create($request->validated());
 
         return redirect()
             ->route('dashboard-tiles.index')
@@ -68,6 +67,7 @@ class DashboardTileController extends Controller
 
     /**
      * Display the form to edit the specified dashboard tile.
+     *
      * @param DashboardTile $dashboardTile The dashboard tile to be edited.
      * @return View The view for editing the dashboard tile.
      */
@@ -89,14 +89,13 @@ class DashboardTileController extends Controller
     /**
      * Update the specified dashboard tile in storage.
      *
+     * @param DashboardTileRequest $request The request object containing the updated dashboard tile data.
      * @param DashboardTile $dashboardTile The dashboard tile to be updated.
      * @return RedirectResponse The redirect response after updating the dashboard tile.
      */
-    public function update(DashboardTile $dashboardTile)
+    public function update(DashboardTileRequest $request, DashboardTile $dashboardTile): RedirectResponse
     {
-        $validated = $this->validateDashboardTile($dashboardTile);
-
-        $dashboardTile->update($validated);
+        $dashboardTile->update($request->validated());
 
         return redirect()
             ->route('dashboard-tiles.index')
@@ -104,38 +103,5 @@ class DashboardTileController extends Controller
                 'status' => 'success',
                 'message' => 'Dashboard tile updated.'
             ]);
-    }
-
-    /**
-     * Validate the request data for creating or updating a dashboard tile.
-     *
-     * @param DashboardTile|null $dashboardTile The dashboard tile instance being validated, or null if a new instance is being created.
-     * @return array The validated data.
-     */
-    private function validateDashboardTile(?DashboardTile $dashboardTile = null): array
-    {
-        $dashboardTile ??= new DashboardTile();
-
-        return request()->validate([
-            'page_id' => [
-                'nullable',
-                'exists:pages,id',
-                function ($attribute, $value, $fail) use ($dashboardTile) {
-                    if ($value && $dashboardTile->childrenDashboardTiles()->exists()) {
-                        $fail('Cannot assign a page to a tile that has children.');
-                    }
-                },
-            ],
-            'parent_dashboard_tile_id' => [
-                'nullable',
-                // this is so that the parent dashboard tile goes to a sub dashboard instead of a page
-                Rule::exists('dashboard_tiles', 'id')->where(function ($query) {
-                    return $query->whereNull('page_id');
-                }),
-                'different:id'
-            ],
-            'title' => 'required|string|max:255',
-            'sort_order' => 'required|integer|min:0',
-        ]);
     }
 }

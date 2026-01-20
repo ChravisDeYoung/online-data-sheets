@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FieldRequest;
 use App\Models\Field;
 use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -45,13 +45,12 @@ class FieldController extends Controller
     /**
      * Store a newly created Field in storage.
      *
+     * @param FieldRequest $request The request object containing the field data.
      * @return RedirectResponse The redirect response after storing the Field.
      */
-    public function store(): RedirectResponse
+    public function store(FieldRequest $request): RedirectResponse
     {
-        $attributes = $this->validateField();
-
-        Field::create($attributes);
+        Field::create($request->validated());
 
         return redirect()
             ->route('fields.index')
@@ -79,15 +78,13 @@ class FieldController extends Controller
     /**
      * Update the specified Field in storage.
      *
-     * @param Request $request The request object containing the updated field data.
+     * @param FieldRequest $request The request object containing the updated field data.
      * @param Field $field The Field to be updated.
      * @return RedirectResponse The redirect response after updating the Field.
      */
-    public function update(Request $request, Field $field): RedirectResponse
+    public function update(FieldRequest $request, Field $field): RedirectResponse
     {
-        $validated = $this->validateField($field);
-
-        $field->update($validated);
+        $field->update($request->validated());
 
         return redirect()
             ->route('fields.index')
@@ -95,29 +92,5 @@ class FieldController extends Controller
                 'status' => 'success',
                 'message' => 'Field updated'
             ]);
-    }
-
-    /**
-     * Validate the request data for creating or updating a field.
-     *
-     * @param Field|null $field The field instance being validated, or null if a new instance is being created.
-     * @return array The validated data.
-     */
-    private function validateField(?Field $field = null): array
-    {
-        $field ??= new Field();
-
-        return request()->validate([
-            'page_id' => 'required|exists:pages,id',
-            'name' => 'required|string|max:255',
-            'type' => 'required|integer|max:15|in:' . implode(',', array_keys(Field::getTypes())),
-            'subsection' => 'required|string|max:255',
-            'subsection_sort_order' => 'required|integer|min:0',
-            'sort_order' => 'required|integer|min:0',
-            'required_columns' => 'required|string|max:255|regex:/^\d+(,\d+)*$/',
-            'minimum' => 'nullable|numeric|prohibited_unless:type,' . Field::TYPE_NUMBER . (request()->filled('maximum') ? '|lt:maximum' : ''),
-            'maximum' => 'nullable|numeric|prohibited_unless:type,' . Field::TYPE_NUMBER . (request()->filled('minimum') ? '|gt:minimum' : ''),
-            'select_options' => 'nullable|string|max:255|regex:/^[^,]+(,[^,]+)*$/|required_if:type,' . Field::TYPE_SELECT . '|prohibited_unless:type,' . Field::TYPE_SELECT,
-        ]);
     }
 }

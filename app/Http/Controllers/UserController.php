@@ -80,9 +80,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param User $user
-     * @return RedirectResponse
+     * @param UserRequest $request The request object containing the updated user data.
+     * @param User $user The user to be updated.
+     * @return RedirectResponse The redirect response after updating the user.
      */
     public function update(UserRequest $request, User $user): RedirectResponse
     {
@@ -98,6 +98,13 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Update the specified resource's password.
+     * '
+     * @param UpdatePasswordRequest $request The request object containing the updated password data.
+     * @param User $user The user whose password is to be updated.
+     * @return RedirectResponse The redirect response after updating the password.
+     */
     public function updatePassword(UpdatePasswordRequest $request, User $user): RedirectResponse
     {
         $attributes = $request->validated();

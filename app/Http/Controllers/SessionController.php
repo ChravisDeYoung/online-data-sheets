@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SessionRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -24,14 +25,12 @@ class SessionController extends Controller
     /**
      * Log in the user and store a new user session.
      *
+     * @param SessionRequest $request The request containing the user credentials.
      * @return RedirectResponse The redirect response after logging in the user.
      */
-    public function store(): RedirectResponse
+    public function store(SessionRequest $request): RedirectResponse
     {
-        $attributes = request()->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        $attributes = $request->validated();
 
         if (!auth()->attempt($attributes)) {
             throw ValidationException::withMessages([
