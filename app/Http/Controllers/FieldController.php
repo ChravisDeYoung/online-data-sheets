@@ -6,6 +6,7 @@ use App\Http\Requests\FieldRequest;
 use App\Models\Field;
 use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -23,6 +24,10 @@ class FieldController extends Controller
         return view('fields.index', [
             'fields' => Field::select('id', 'name', 'type', 'subsection', 'page_id')
                 ->with('page:id,name')
+                ->orderBy(
+                    Page::select('name')
+                        ->whereColumn('pages.id', 'fields.page_id')
+                )
                 ->orderBy('subsection_sort_order')
                 ->orderBy('sort_order')
                 ->search(request('search'))
@@ -34,9 +39,20 @@ class FieldController extends Controller
      *
      * @return View The view for creating a new Field.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
+        $field = null;
+
+        if ($request->has('copy_id')) {
+            $originalField = Field::find($request->input('copy_id'));
+
+            if ($originalField) {
+                $field = $originalField->replicate();
+            }
+        }
+
         return view('fields.create', [
+            'field' => $field,
             'fieldTypes' => Field::getTypes(),
             'pages' => Page::select('id', 'name')->get()
         ]);

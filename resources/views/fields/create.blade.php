@@ -10,7 +10,8 @@
                         <option value="" disabled selected>Select a page</option>
 
                         @foreach ($pages as $page)
-                            <option value="{{ $page->id }}" @if(old('page_id') == $page->id) selected @endif>
+                            <option value="{{ $page->id }}"
+                                    @if(old('page_id', optional($field)->page_id) == $page->id) selected @endif>
                                 {{ $page->name }}
                             </option>
                         @endforeach
@@ -18,7 +19,11 @@
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="name" type="text" required/>
+                    <x-form.input
+                        name="name"
+                        type="text"
+                        required
+                        :value="old('name', optional($field)->name)"/>
                 </div>
 
                 <div class="w-full">
@@ -26,7 +31,8 @@
                         <option value="" disabled selected>Select a type</option>
 
                         @foreach ($fieldTypes as $typeValue => $typeName)
-                            <option value="{{ $typeValue }}" @if(old('type') == $typeValue) selected @endif>
+                            <option value="{{ $typeValue }}"
+                                    @if(old('type', optional($field)->type) == $typeValue) selected @endif>
                                 {{ ucfirst($typeName) }}
                             </option>
                         @endforeach
@@ -34,31 +40,56 @@
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="subsection" type="text" required/>
+                    <x-form.input
+                        name="subsection"
+                        type="text"
+                        required
+                        :value="old('subsection', optional($field)->subsection)"/>
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="subsection_sort_order" type="number" required/>
+                    <x-form.input
+                        name="subsection_sort_order"
+                        type="number"
+                        required
+                        :value="old('subsection_sort_order', optional($field)->subsection_sort_order)"/>
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="sort_order" type="number" required/>
+                    <x-form.input
+                        name="sort_order"
+                        type="number"
+                        required
+                        :value="old('sort_order', optional($field)->sort_order)"/>
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="required_columns" type="text" required/>
+                    <x-form.input
+                        name="required_columns"
+                        type="text"
+                        required
+                        :value="old('required_columns', optional($field)->required_columns)"/>
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="minimum" type="number"/>
+                    <x-form.input
+                        name="minimum"
+                        type="number"
+                        :value="old('minimum', optional($field)->minimum)"/>
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="maximum" type="number"/>
+                    <x-form.input
+                        name="maximum"
+                        type="number"
+                        :value="old('maximum', optional($field)->maximum)"/>
                 </div>
 
                 <div class="w-full">
-                    <x-form.input name="select_options" type="text"/>
+                    <x-form.input
+                        name="select_options"
+                        type="text"
+                        :value="old('select_options', optional($field)->select_options)"/>
                 </div>
             </div>
 

@@ -31,6 +31,13 @@
                                     Edit
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="{{ route('fields.create', ['copy_id' => $field->id]) }}"
+                                   class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    Copy
+                                </a>
+                            </li>
                         </ul>
                     </x-slot>
                 </x-table.row>
